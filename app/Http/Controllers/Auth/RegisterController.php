@@ -51,6 +51,14 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'profile_img'=>['required', 'string', 'max:255'],
+            'cover_img'=>['required', 'string', 'max:255'],
+            'bio'=>['required', 'string', 'max:255'],
+            'github'=>['string', 'max:70'],
+            'website'=>['string', 'max:100'],
+            'twitter'=>['string', 'max:50'],
+            'slug'=>['required', 'string', 'max:50'],
+            'rol'=>['required', 'string',Rule::in(['administrator', 'author'])],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
