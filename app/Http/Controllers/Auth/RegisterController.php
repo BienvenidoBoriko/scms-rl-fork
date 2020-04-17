@@ -58,7 +58,7 @@ class RegisterController extends Controller
             'website'=>['string', 'max:100'],
             'twitter'=>['string', 'max:50'],
             'slug'=>['required', 'string', 'max:50'],
-            'rol'=>['required', 'string',Rule::in(['administrator', 'author'])],
+            'rol'=>['required', 'integer'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -74,6 +74,14 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'profile_img'=>$data['profile_img'],
+            'cover_img'=>$data['cover_img'],
+            'bio'=>$data['bio'],
+            'github'=>$data['github'],
+            'website'=>$data['website'],
+            'twitter'=>$data['twitter'],
+            'slug'=>$data['slug'],
+            'rol'=>$data['rol'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
