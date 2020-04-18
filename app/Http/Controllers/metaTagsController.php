@@ -68,7 +68,7 @@ class metaTagsController extends Controller
      * @param  \App\metaTags  $metaTags
      * @return \Illuminate\Http\Response
      */
-    public function edit(metaTags $metaTags)
+    public function edit($id)
     {
         //
     }

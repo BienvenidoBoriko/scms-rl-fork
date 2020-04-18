@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\metaTags;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -59,6 +60,8 @@ class RegisterController extends Controller
             'twitter'=>['string', 'max:50'],
             'slug'=>['required', 'string', 'max:50'],
             'rol'=>['required', 'integer'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -72,18 +75,44 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'profile_img'=>$data['profile_img'],
-            'cover_img'=>$data['cover_img'],
-            'bio'=>$data['bio'],
-            'github'=>$data['github'],
-            'website'=>$data['website'],
-            'twitter'=>$data['twitter'],
-            'slug'=>$data['slug'],
-            'rol'=>$data['rol'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if ($data) {
+            try {
+              DB::beginTransaction();
+
+            $user= User::create([
+                'name' => $data['name'],
+                'profile_img'=>$data['profile_img'],
+                'cover_img'=>$data['cover_img'],
+                'bio'=>$data['bio'],
+                'github'=>$data['github'],
+                'website'=>$data['website'],
+                'twitter'=>$data['twitter'],
+                'slug'=>$data['slug'],
+                'rol'=>$data['rol'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                ]);
+
+                metaTags::create([
+                    'name' => 'meta_title',
+                    'value'=>$data['meta_title'],
+                    'type'=>'post',
+                    'id_owner'=>$user->id()
+                ]);
+
+                metaTags::create([
+                    'name' => 'meta_desc',
+                    'value'=>$data['meta_desc'],
+                    'type'=>'post',
+                    'id_owner'=>$user->id()
+                ]);
+              DB::commit();
+            } catch (Exception $e) {
+              db::rollback();
+            }
+
+            return $user;
+          }
+
     }
 }
