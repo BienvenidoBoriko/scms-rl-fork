@@ -13,8 +13,9 @@ class CreateMetaTagsTable extends Migration
      */
     public function up()
     {
-        Schema::table('metaTags', function (Blueprint $table) {
-            //
+        Schema::create('meta_tags', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class CreateMetaTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('metaTags', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('meta_tags');
     }
 }
