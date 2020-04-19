@@ -46,43 +46,26 @@ class metaTagsController extends Controller
                 'type'=>$data['type'],
                 'id_owner'=>$data['id_owner']
             ]);
-
-
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\metaTags  $metaTags
-     * @return \Illuminate\Http\Response
-     */
-    public function show(metaTags $metaTags)
+
+    public function getMetags()
     {
-        //
+       return response()->json(metaTags::all());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\metaTags  $metaTags
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function getMetag($id)
     {
-        //
+        $metaTag = metaTags::find($id);
+        return response()->json($metaTag);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\metaTags  $metaTags
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, metaTags $metaTags)
+
+    public function update($id,$data)
     {
-        //
+        $metaTag = metaTags::find($id);
+        $metaTag->update($data);
     }
 
     /**
@@ -91,8 +74,10 @@ class metaTagsController extends Controller
      * @param  \App\metaTags  $metaTags
      * @return \Illuminate\Http\Response
      */
-    public function destroy(metaTags $metaTags)
+    public function destroy($id)
     {
-        //
+        metaTags::destroy($id);
+
+       // $metaTag->delete();
     }
 }

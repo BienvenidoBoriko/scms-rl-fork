@@ -52,9 +52,13 @@ class RolController extends Controller
      * @param  \App\metaTags  $metaTags
      * @return \Illuminate\Http\Response
      */
-    public function show(metaTags $metaTags)
+    public function getRol($id)
     {
-        //
+        return response()->json(rol::find($id));
+    }
+    public function getRols()
+    {
+       return response()->json(rol::all());
     }
 
     /**
@@ -75,9 +79,10 @@ class RolController extends Controller
      * @param  \App\metaTags  $metaTags
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, metaTags $metaTags)
+    public function update($id,$data)
     {
-        //
+        $rol = rol::find($id);
+        $rol->update($data);
     }
 
     /**
@@ -86,8 +91,8 @@ class RolController extends Controller
      * @param  \App\metaTags  $metaTags
      * @return \Illuminate\Http\Response
      */
-    public function destroy(metaTags $metaTags)
+    public function destroy($id)
     {
-        //
+        rol::destroy($id);
     }
 }
