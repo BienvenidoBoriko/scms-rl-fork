@@ -15,6 +15,10 @@ class CreateMetaTagsTable extends Migration
     {
         Schema::create('meta_tags', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('value');
+            $table->string('type');
+            $table->string('id_owner');
             $table->timestamps();
         });
     }

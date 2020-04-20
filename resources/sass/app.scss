@@ -62,16 +62,6 @@ body {
     display: none;
 }
 
-
-/*.navbar-nav>.notifications-menu>.dropdown-menu,
-.navbar-nav>.messages-menu>.dropdown-menu,
-.navbar-nav>.tasks-menu>.dropdown-menu {
-    width: 280px;
-    padding: 0 0 0 0;
-    margin: 0;
-    top: 100%;
-}*/
-
 a.navbar-brand {
     width: 165px;
 }
@@ -226,6 +216,9 @@ a.navbar-brand {
 
 /** sidebar boss **/
 
+
+/** begin View home **/
+
 .panel-default>.panel-heading {
     background-color: #3c8dbc !important;
     border-color: #3c8dbc !important;
@@ -257,3 +250,6 @@ a.navbar-brand {
     padding: 9px;
     border-radius: 3px
 }
+
+
+/** end view home **/
