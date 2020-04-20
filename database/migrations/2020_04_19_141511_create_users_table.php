@@ -24,7 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('website');
             $table->string('twitter');
             $table->string('slug');
-            $table->string('rol');
+            $table->unsignedBigInteger('rol');
+            $table->foreign('rol')->references('id')->on('rols');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
