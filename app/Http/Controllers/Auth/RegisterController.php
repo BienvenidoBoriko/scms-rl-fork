@@ -52,8 +52,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'profile_img'=>['required', 'string', 'max:255'],
-            'cover_img'=>['required', 'string', 'max:255'],
+            'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp', 'max:2048'],
+            'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp', 'max:2048'],
             'bio'=>['required', 'string', 'max:255'],
             'github'=>['string', 'max:70'],
             'website'=>['string', 'max:100'],
@@ -62,7 +62,7 @@ class RegisterController extends Controller
             'rol'=>['required', 'integer'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -76,13 +76,22 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         if ($data) {
+
+            $pathProfileImg = $data->file('profile_img')->storeAs(
+                'users/'.$data['name'].'/avatar', $request->file('profile_img')->getClientOriginalName()
+            );
+
+            $pathCovImg = $request->file('cover_img')->storeAs(
+                'users/'.$data['name'].'/cover', $request->file('cover_img')->getClientOriginalName()
+            );
             try {
-              DB::beginTransaction();
+
+            DB::beginTransaction();
 
             $user= User::create([
                 'name' => $data['name'],
-                'profile_img'=>$data['profile_img'],
-                'cover_img'=>$data['cover_img'],
+                'profile_img'=>$pathProfileImg,
+                'cover_img'=>$pathCovImg,
                 'bio'=>$data['bio'],
                 'github'=>$data['github'],
                 'website'=>$data['website'],
