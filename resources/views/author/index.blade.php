@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a class="btn btn-secondary" href="createAuthor.html">Crear autor<br></a>
+<a class="btn btn-secondary" href="{{ route('author.create') }}">Crear autor<br></a>
 <form class="mt-4 mb-2">
     <div class="form-row">
         <div class="col col-md-2">
