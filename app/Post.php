@@ -11,4 +11,9 @@ class Post extends Model
         'html','featured_img','cover_image','featured','custom_except','slug',
          'tags','category'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'post_tags');
+    }
 }

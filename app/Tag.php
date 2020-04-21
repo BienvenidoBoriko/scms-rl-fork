@@ -9,4 +9,9 @@ class Tag extends Model
     protected $fillable = [
         'name','slug','description','featured_img'
     ];
+
+    public function posts()
+    {
+        return $this->belongsToMany('App\Post','post_tags');
+    }
 }
