@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Tag;
+
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
-        return view('tag.index', [
-            'tags' => Tag::withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
+        return view('category.index', [
+            'categories' => Category::withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
         ]);
     }
 
@@ -21,7 +21,7 @@ class TagController extends Controller
     public function create()
     {
         //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
-        return view('tag.create');
+        return view('category.create');
     }
 
     /**
@@ -40,10 +40,11 @@ class TagController extends Controller
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
+            'visibility'=>['required','boolean']
         ]);
 
         $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'tags/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
+            'categories/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
         );
         $data = [
 
@@ -51,17 +52,18 @@ class TagController extends Controller
             'description' => $request->input('description'),
             'featured_img' => $pathFeaturedImg,
             'slug' => $request->input('slug'),
+            'visibility'=>$request->input('visibility'),
             'meta_title' => $request->input('meta_title'),
-            'meta_desc' => $request->input('meta_desc'),
+            'meta_desc' => $request->input('meta_desc')
         ];
 
-        $post = Tag::create($data);
+        $post = Category::create($data);
 
      /*   if ($request->has('category')) {
             $post->categories()->sync($request->input('category'));
         }
     */
-        return redirect()->route('tag.index')->with('success', 'etiqueta creada correctamente!');
+        return redirect()->route('category.index')->with('success', 'categoria creada correctamente!');
     }
 
     /**
@@ -72,9 +74,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-        return view('tag.edit', [
-            'tag' => $tag,
+        $category = Category::find($id);
+        return view('category.edit', [
+            'category' => $category,
         ]);
     }
 
@@ -91,14 +93,15 @@ class TagController extends Controller
         $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:100'],
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
+            'visibility'=>['required','boolean']
         ]);
 
         $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'tags/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
+            'categories/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
         );
         $data = [
 
@@ -106,6 +109,7 @@ class TagController extends Controller
             'description' => $request->input('description'),
             'featured_img' => $pathFeaturedImg,
             'slug' => $request->input('slug'),
+            'visibility'=>$request->input('visibility'),
             'meta_title' => $request->input('meta_title'),
             'meta_desc' => $request->input('meta_desc')
         ];
@@ -114,8 +118,8 @@ class TagController extends Controller
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
 
-        $tag = Tag::find($id);
-        $tag->update($data);
+        $category = Category::find($id);
+        $category->update($data);
 
        /* if ($request->has('category')) {
             $post->categories()->sync($request->input('category'));
@@ -123,7 +127,7 @@ class TagController extends Controller
             $post->categories()->detach();
         }*/
 
-        return redirect()->route('tag.edit', $post->id)->with('success', 'Etiqueta actualizada correctamente!');
+        return redirect()->route('category.edit', $post->id)->with('success', 'categoria actualizada correctamente!');
     }
 
     /**
@@ -134,8 +138,8 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        Tag::find($id)->delete();
+        Category::find($id)->delete();
 
-        return redirect()->route('tag.index')->with('success', 'Etiqueta eliminada correctamente!');
+        return redirect()->route('category.index')->with('success', 'categoria eliminada correctamente!');
     }
 }

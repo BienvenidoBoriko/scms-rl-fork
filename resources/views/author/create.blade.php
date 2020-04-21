@@ -3,7 +3,7 @@
 @section('content')
 
 <section>
-    <form class="mt-4 mb-2" id="author-create-form" action="{{ route('author.create') }}">
+    <form class="mt-4 mb-2" id="author-create-form" action="{{ route('author.store') }}">
         <div class="form-group">
             <div class="form-row">
                 <div class="col col-sm-4 col-lg-3"><label for="titulo">Nombre<br></label><input class="form-control"
