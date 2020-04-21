@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->string('slug',30);
             $table->string('meta_desc',70);
             $table->string('meta_title',200);
-            $table->boolean('visibility');
+            $table->string('visibility');
             $table->timestamps();
         });
     }

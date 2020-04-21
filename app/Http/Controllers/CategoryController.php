@@ -40,7 +40,7 @@ class CategoryController extends Controller
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
-            'visibility'=>['required','boolean']
+            'visibility'=>['required','string']
         ]);
 
         $pathFeaturedImg = $request->file('featured_img')->storeAs(

@@ -47,7 +47,7 @@ class PostController extends Controller
             'custom_except' => ['required','string','nullable','max:100'],
             'slug' => ['required','string','max:30'],
             'tags' => ['required','array','max:200'],
-            'category' => ['required','string','nullable','max:30']
+            'category_id' => ['required','string','nullable','max:30']
         ]);
 
         $user = Auth::user();
@@ -73,7 +73,7 @@ class PostController extends Controller
             'featured' => $request->input('featured'),
             'custom_except' => $request->input('custom_except'),
             'tags' => implode(',',$request->input('tags')),
-            'category' => $request->input('category'),
+            'category_id' => $request->input('category'),
         ];
 
         $post = Post::create($data);
@@ -124,7 +124,7 @@ class PostController extends Controller
             'custom_except' => ['required','string','nullable','max:100'],
             'slug' => ['required','string','max:30'],
             'tags' => ['required','array','max:200'],
-            'category' => ['required','string','nullable','max:30']
+            'category_id' => ['required','string','nullable','max:30']
         ]);
 
         $data = [
@@ -141,7 +141,7 @@ class PostController extends Controller
             'featured' => $request->input('featured'),
             'custom_except' => $request->input('custom_except'),
             'tags' => implode(',',$request->input('tags')),
-            'category' => $request->input('category'),
+            'category_id' => $request->input('category'),
         ];
 
         /*if ($request->hasFile('cover_image')) {

@@ -28,7 +28,7 @@ class CreatePostsTable extends Migration
             $table->string('custom_except',100);
             $table->string('slug',30);
             $table->string('tags',200)->nullable();;
-            $table->string('category',30);
+            $table->string('category_id',30);
             $table->timestamps();
         });
     }
