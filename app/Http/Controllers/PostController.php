@@ -53,7 +53,7 @@ class PostController extends Controller
         $user = Auth::user();
 
         $pathFeaturedImg = $data->file('featured_img')->storeAs(
-            'posts/'.$request->input('title').'/featured', $request->file('profile_img')->getClientOriginalName()
+            'posts/'.$request->input('title').'/featured', $request->file('featured_img')->getClientOriginalName()
         );
 
         $pathCovImg = $request->file('cover_image')->storeAs(
