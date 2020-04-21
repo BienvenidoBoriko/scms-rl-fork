@@ -2,7 +2,7 @@
 
 @section('content')
 <section>
-<a class="btn btn-secondary" href="{{ route('post.create')}}">Crear entrada</a>
+    <a class="btn btn-secondary" href="{{ route('post.create') }}">Crear entrada</a>
     <form class="mt-4 mb-2">
         <div class="form-row">
             <div class="col col-md-2 col-lg-1">
@@ -38,7 +38,7 @@
                         <td> {{ $post->category }} </td>
                         <td>{{ $post->tags }}</td>
                         <td>
-                             @if($post->featured===true) si @else no @endif
+                            @if($post->featured===true) si @else no @endif
                         </td>
                     </tr>
                 @endforeach
