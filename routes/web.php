@@ -27,6 +27,10 @@ Route::get('/author', 'UserController@index')->name('author.index');
 Route::get('/author/create', 'UserController@create')->name('author.create');
 Route::post('/author/store', 'UserController@create')->name('author.store');
 
-Route::get('/tag', 'TagController@index')->name('tag.index');
+Route::get('/tags', 'TagController@index')->name('tag.index');
 Route::get('/tag/create', 'TagController@create')->name('tag.create');
 Route::post('/tag/store', 'TagController@store')->name('tag.store');
+
+Route::get('/categories', 'CategoryController@index')->name('category.index');
+Route::get('/categories/create', 'CategoryController@create')->name('category.create');
+Route::post('/categories/store', 'CategoryController@store')->name('category.store');

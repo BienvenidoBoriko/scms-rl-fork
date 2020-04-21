@@ -30,13 +30,15 @@
         </thead>
         <tbody>
             @foreach($authors as $author)
-                    <tr>
-                        <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
-                    <td><img class="profileImg" src="{{asset("storage/$author->profile_img") }}" alt="imagen de usuario {{$author->name}}"> </td>
-                        <td>  {{ $author->name }} </td>
-                        <td>{{ $author->posts_count  }}</td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
+                    <td><img class="profileImg"
+                            src="{{ asset("storage/$author->profile_img") }}"
+                            alt="imagen de usuario {{ $author->name }}"> </td>
+                    <td> {{ $author->name }} </td>
+                    <td>{{ $author->posts_count }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
