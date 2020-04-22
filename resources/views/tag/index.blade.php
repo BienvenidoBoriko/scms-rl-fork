@@ -30,7 +30,7 @@
                     <tr>
                         <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
                         <td> {{ $tag->name }} </td>
-                        <td> {{ $tag->post_count }} </td>
+                        <td> {{ $tag->posts_count }} </td>
                     </tr>
                 @endforeach
             </tbody>

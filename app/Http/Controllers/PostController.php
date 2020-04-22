@@ -1,16 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use DB;
 use App\Post;
+use App\Tag;
+use App\Meta_tags;
+use App\Category;
+use App\User;
 
 class PostController extends Controller
 {
     public function index()
     {
         return view('post.index', [
-            'posts' => Post::orderBy('created_at', 'desc')->paginate(7)
+            'posts' => Post::with(['tags', 'category'])->orderBy('created_at', 'desc')->paginate(7)
         ]);
     }
 
@@ -21,8 +26,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
-        return view('post.create');
+        return view('post.create', ['users'=>User::all(),
+        'categories' => Category::all(), 'tags'=> Tag::all()
+        ]);
+        //return view('post.create');
     }
 
     /**
@@ -34,54 +41,63 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        try {
+            $this->validate($request, [
             'title' => ['required','string','max:20'],
-            'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
-            'id_author' => ['required','integer','max:20'],
+           // 'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
+            'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
-            'plain_text' => ['required','string','nullable'],
             'html' => ['required','string'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
-            'cover_image' => ['image', 'mimes:png,jpg,jpeg,bmp', 'required','max:70'],
             'featured' => ['required','boolean'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
             'custom_except' => ['required','string','nullable','max:100'],
             'slug' => ['required','string','max:30'],
-            'tags' => ['required','array','max:200'],
+            'tags' => ['required','array'],
             'category_id' => ['required','string','nullable','max:30']
         ]);
 
-        $user = Auth::user();
-
-        $pathFeaturedImg = $data->file('featured_img')->storeAs(
-            'posts/'.$request->input('title').'/featured', $request->file('featured_img')->getClientOriginalName()
-        );
-
-        $pathCovImg = $request->file('cover_image')->storeAs(
-            'posts/'.$request->input('title').'/cover', $request->file('cover_img')->getClientOriginalName()
-        );
-        $data = [
+            $pathFeaturedImg = $request->file('featured_img')->storeAs(
+                'posts/'.$request->input('title').'/featured',
+                $request->file('featured_img')->getClientOriginalName()
+            );
+            $data = [
 
             'title' => $request->input('title'),
-            'status' => $request->input('status'),
+            'status' => 'publiced',
             'published_at' => $request->input('published_at'),
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
-            'cover_image' => $pathCovImg,
+            'cover_image' => $pathFeaturedImg,//eliminar
             'slug' => $request->input('slug'),
-            'id_author' => $user->id,
+            'user_id' => $request->input('author_id'),
             'featured' => $request->input('featured'),
             'custom_except' => $request->input('custom_except'),
-            'tags' => implode(',',$request->input('tags')),
-            'category_id' => $request->input('category'),
+            'category_id' => $request->input('category_id'),
         ];
 
-        $post = Post::create($data);
+            $post = Post::create($data);
+            $tags = Tag::find($request->input('tags'));
+            $post->tags()->attach($tags);
+            Meta_tags::create([
+                    'name' => 'meta_title',
+                    'value'=>$request->input('meta_title'),
+                    'type'=>'post',
+                    'id_owner'=>$request->input('author_id')
+                ]);
 
-     /*   if ($request->has('category')) {
-            $post->categories()->sync($request->input('category'));
+            Meta_tags::create([
+                    'name' => 'meta_desc',
+                    'value'=>$request->input('meta_desc'),
+                    'type'=>'post',
+                    'id_owner'=>$request->input('author_id')
+                ]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
-    */
         return redirect()->route('post.index')->with('success', 'entrada creada correctamente!');
     }
 
@@ -114,13 +130,14 @@ class PostController extends Controller
         $this->validate($request, [
             'title' => ['required','string','max:20'],
             'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
-            'id_author' => ['required','integer','max:20'],
+            'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
             'plain_text' => ['required','string','nullable'],
             'html' => ['required','string'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
-            'cover_image' => ['image', 'mimes:png,jpg,jpeg,bmp', 'required','max:70'],
             'featured' => ['required','boolean'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
             'custom_except' => ['required','string','nullable','max:100'],
             'slug' => ['required','string','max:30'],
             'tags' => ['required','array','max:200'],
@@ -135,34 +152,30 @@ class PostController extends Controller
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
-            'cover_image' => $pathCovImg,
             'slug' => $request->input('slug'),
-            'id_author' => $user->id,
+            'user_id' => $request->input('author_id'),
             'featured' => $request->input('featured'),
             'custom_except' => $request->input('custom_except'),
-            'tags' => implode(',',$request->input('tags')),
-            'category_id' => $request->input('category'),
+            'tags' => implode(',', $request->input('tags')),
+            'category_id' => $request->input('category_id'),
         ];
 
         /*if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
-        $pathFeaturedImg = $data->file('featured_img')->storeAs(
-            'posts/'.$request->input('title').'/featured', $request->file('profile_img')->getClientOriginalName()
-        );
-
-        $pathCovImg = $request->file('cover_image')->storeAs(
-            'posts/'.$request->input('title').'/cover', $request->file('cover_img')->getClientOriginalName()
+        $pathFeaturedImg = $request->file('featured_img')->storeAs(
+            'posts/'.$request->input('title').'/featured',
+            $request->file('profile_img')->getClientOriginalName()
         );
 
         $post = Post::find($id);
         $post->update($data);
 
-       /* if ($request->has('category')) {
-            $post->categories()->sync($request->input('category'));
-        } else {
-            $post->categories()->detach();
-        }*/
+        /* if ($request->has('category')) {
+             $post->categories()->sync($request->input('category'));
+         } else {
+             $post->categories()->detach();
+         }*/
 
         return redirect()->route('post.edit', $post->id)->with('success', 'Entrada actualizada correctamente!');
     }

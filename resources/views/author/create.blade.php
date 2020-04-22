@@ -56,8 +56,4 @@
             class="btn btn-primary ml-3 btn-secondary" type="button">Volver</button>
     </form>
 </section>
-
-@php
-print_r($errors)
-@endphp
 @endsection

@@ -23,11 +23,9 @@ class CreatePostsTable extends Migration
             $table->string('plain_text')->nullable();
             $table->string('html');
             $table->string('featured_img',70);
-            $table->string('cover_image',70);
             $table->boolean('featured');
             $table->string('custom_except',100);
             $table->string('slug',30);
-            $table->string('tags',200)->nullable();;
             $table->string('category_id',30);
             $table->timestamps();
         });

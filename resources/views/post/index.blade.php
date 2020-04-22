@@ -35,10 +35,14 @@
                     <tr>
                         <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
                         <td> {{ $post->title }} </td>
-                        <td> {{ $post->category }} </td>
-                        <td>{{ $post->tags }}</td>
+                        <td> {{ $post->category->name }} </td>
                         <td>
-                            @if($post->featured===true) si @else no @endif
+                            @foreach($post->tags as $tag)
+                            <span class="badge badge-secondary">{{ $tag->name }}</span>
+                            @endforeach
+                        </td>
+                        <td>
+                            @if($post->featured==true) si @else no @endif
                         </td>
                     </tr>
                 @endforeach

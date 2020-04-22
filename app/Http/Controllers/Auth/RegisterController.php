@@ -77,17 +77,16 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-        if ($request) {
-
+        try {
             $pathProfileImg = $request->file('profile_img')->storeAs(
-                'users/'.$request['name'].'/avatar', $request->file('profile_img')->getClientOriginalName()
+                'users/'.$request['name'].'/avatar',
+                $request->file('profile_img')->getClientOriginalName()
             );
 
             $pathCovImg = $request->file('cover_img')->storeAs(
-                'users/'.$request['name'].'/cover', $request->file('cover_img')->getClientOriginalName()
+                'users/'.$request['name'].'/cover',
+                $request->file('cover_img')->getClientOriginalName()
             );
-            try {
-
             DB::beginTransaction();
 
             $user= User::create([
@@ -105,27 +104,24 @@ class RegisterController extends Controller
                 'password' => Hash::make($request['password']),
                 ]);
 
-                Meta_tags::create([
+            Meta_tags::create([
                     'name' => 'meta_title',
                     'value'=>$request['meta_title'],
-                    'type'=>'post',
+                    'type'=>'author',
                     'id_owner'=>$user->id
                 ]);
 
-                Meta_tags::create([
+            Meta_tags::create([
                     'name' => 'meta_desc',
                     'value'=>$request['meta_desc'],
-                    'type'=>'post',
+                    'type'=>'author',
                     'id_owner'=>$user->id
                 ]);
-              DB::commit();
-            } catch (Exception $e) {
-              DB::rollback();
-            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
 
-            return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
-          }
-
+        return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
     }
 }
-
