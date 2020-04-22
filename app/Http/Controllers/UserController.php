@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Post;
+use App\rol;
 use Illuminate\Http\Request;
+
 
 class UserController extends Controller
 {
@@ -28,7 +30,9 @@ class UserController extends Controller
     public function create()
     {
         //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
-        return view('author.create');
+        return view('author.create',[
+            'rols'=> rol::all()
+        ]);
     }
 
     /**

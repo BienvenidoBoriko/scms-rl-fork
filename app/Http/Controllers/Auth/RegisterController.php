@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
-use App\metaTags;
+use App\Meta_tags;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -45,12 +47,12 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array  $request
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(Request $request)
     {
-        return Validator::make($data, [
+        return Validator::make($request, [
             'name' => ['required', 'string', 'max:255'],
             'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp', 'max:2048'],
             'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp', 'max:2048'],
@@ -59,7 +61,7 @@ class RegisterController extends Controller
             'website'=>['string', 'max:100'],
             'twitter'=>['string', 'max:50'],
             'slug'=>['required', 'string', 'max:50'],
-            'rol'=>['required', 'integer'],
+            'rol_id'=>['required', 'integer'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
@@ -70,57 +72,58 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array  $request
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        if ($data) {
+        if ($request) {
 
-            $pathProfileImg = $data->file('profile_img')->storeAs(
-                'users/'.$data['name'].'/avatar', $request->file('profile_img')->getClientOriginalName()
+            $pathProfileImg = $request->file('profile_img')->storeAs(
+                'users/'.$request['name'].'/avatar', $request->file('profile_img')->getClientOriginalName()
             );
 
             $pathCovImg = $request->file('cover_img')->storeAs(
-                'users/'.$data['name'].'/cover', $request->file('cover_img')->getClientOriginalName()
+                'users/'.$request['name'].'/cover', $request->file('cover_img')->getClientOriginalName()
             );
             try {
 
             DB::beginTransaction();
 
             $user= User::create([
-                'name' => $data['name'],
+                'name' => $request['name'],
+                'status'=>'ofline',
                 'profile_img'=>$pathProfileImg,
                 'cover_img'=>$pathCovImg,
-                'bio'=>$data['bio'],
-                'github'=>$data['github'],
-                'website'=>$data['website'],
-                'twitter'=>$data['twitter'],
-                'slug'=>$data['slug'],
-                'rol'=>$data['rol'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'bio'=>$request['bio'],
+                'github'=>$request['github'],
+                'website'=>$request['website'],
+                'twitter'=>$request['twitter'],
+                'slug'=>$request['slug'],
+                'rol_id'=>$request['rol_id'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
                 ]);
 
-                metaTags::create([
+                Meta_tags::create([
                     'name' => 'meta_title',
-                    'value'=>$data['meta_title'],
+                    'value'=>$request['meta_title'],
                     'type'=>'post',
-                    'id_owner'=>$user->id()
+                    'id_owner'=>$user->id
                 ]);
 
-                metaTags::create([
+                Meta_tags::create([
                     'name' => 'meta_desc',
-                    'value'=>$data['meta_desc'],
+                    'value'=>$request['meta_desc'],
                     'type'=>'post',
-                    'id_owner'=>$user->id()
+                    'id_owner'=>$user->id
                 ]);
               DB::commit();
             } catch (Exception $e) {
-              db::rollback();
+              DB::rollback();
             }
 
-            return $user;
+            return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
           }
 
     }

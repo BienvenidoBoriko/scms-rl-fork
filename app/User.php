@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name','profile_img','cover_img','email','bio','status',
         'password', 'github','website','twitter',
-        'slug','rol'
+        'slug','rol_id'
     ];
 
     /**
@@ -44,8 +44,8 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    /* public function tags()
+    public function rol()
     {
-        return $this->hasMany(Tag::class);
-    } */
+        return $this->belongsTo('App\rol');
+    }
 }

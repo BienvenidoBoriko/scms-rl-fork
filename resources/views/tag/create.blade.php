@@ -36,9 +36,5 @@
         </div><button class="btn btn-primary mr-5" type="submit">Guardar</button><button
             class="btn btn-primary ml-3 btn-secondary" type="button">Volver</button>
     </form>
-
-    @php
-        print_r($errors)
-    @endphp
 </section>
 @endsection
