@@ -48,7 +48,7 @@ class PostController extends Controller
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
             'html' => ['required','string'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
@@ -59,7 +59,7 @@ class PostController extends Controller
         ]);
 
             $pathFeaturedImg = $request->file('featured_img')->storeAs(
-                'posts/'.$request->input('title').'/featured',
+                'public/posts/'.$request->input('title').'/featured',
                 $request->file('featured_img')->getClientOriginalName()
             );
             $data = [
@@ -70,7 +70,7 @@ class PostController extends Controller
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
-            'cover_image' => $pathFeaturedImg,//eliminar
+            //'cover_image' => $pathFeaturedImg,//eliminar
             'slug' => $request->input('slug'),
             'user_id' => $request->input('author_id'),
             'featured' => $request->input('featured'),
@@ -134,7 +134,7 @@ class PostController extends Controller
             'published_at'=>['nullable','date'],
             'plain_text' => ['required','string','nullable'],
             'html' => ['required','string'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
@@ -178,6 +178,28 @@ class PostController extends Controller
          }*/
 
         return redirect()->route('post.edit', $post->id)->with('success', 'Entrada actualizada correctamente!');
+    }
+
+
+    public function upload(Request $request)
+    {
+        $this->validate($request, ['upload' => ['required','image'], ]);
+
+         $request->file('upload')->storeAs(
+            'public/posts/upload/images',
+            $request->file('upload')->getClientOriginalName()
+        );
+
+        $path = 'storage/posts/upload/images/'.$request->file('upload')->getClientOriginalName();
+
+        $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+        $url = asset($path);
+        $msg = 'Image successfully uploaded';
+        $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+
+        // Render HTML output
+        @header('Content-type: text/html; charset=utf-8');
+        echo $re;
     }
 
     /**

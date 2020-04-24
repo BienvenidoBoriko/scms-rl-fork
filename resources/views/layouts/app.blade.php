@@ -12,6 +12,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="http://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <script>window.CKEDITOR || document.write('<script src="/vendor/ckeditor/ckeditor.js"/>')</script>
+
+   <!-- <script src="/vendor/ckeditor/ckeditor.js"></script> -->
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

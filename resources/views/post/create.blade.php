@@ -99,4 +99,12 @@
 @php
     print_r($errors)
 @endphp
+
+
+<script>
+    CKEDITOR.replace( 'contenido', {
+        filebrowserUploadUrl: "{{route('post.image.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form'
+    });
+</script>
 @endsection

@@ -79,12 +79,12 @@ class RegisterController extends Controller
     {
         try {
             $pathProfileImg = $request->file('profile_img')->storeAs(
-                'users/'.$request['name'].'/avatar',
+                'public/users/'.$request['name'].'/avatar',
                 $request->file('profile_img')->getClientOriginalName()
             );
 
             $pathCovImg = $request->file('cover_img')->storeAs(
-                'users/'.$request['name'].'/cover',
+                'public/users/'.$request['name'].'/cover',
                 $request->file('cover_img')->getClientOriginalName()
             );
             DB::beginTransaction();

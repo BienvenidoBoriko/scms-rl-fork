@@ -43,7 +43,7 @@ class TagController extends Controller
         ]);
 
         $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'tags/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
+            'public/tags/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
         );
         $data = [
 

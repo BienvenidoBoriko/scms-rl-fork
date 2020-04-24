@@ -44,7 +44,7 @@ class CategoryController extends Controller
         ]);
 
         $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'categories/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
+            'public/categories/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
         );
         $data = [
 
