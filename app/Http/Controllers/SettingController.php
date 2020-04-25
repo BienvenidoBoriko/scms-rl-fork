@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Setting;
+use App\User;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -19,7 +20,7 @@ class SettingController extends Controller
     public function create()
     {
         return view('setting.create', ['settings'=>Setting::all(),
-        'users' => User::all()
+        'users' => User::with('rol')->get()
         ]);
         //return view('post.create');
     }
