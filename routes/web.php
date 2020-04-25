@@ -36,3 +36,7 @@ Route::post('/tags/store', 'TagController@store')->name('tag.store');
 Route::get('/categories', 'CategoryController@index')->name('category.index');
 Route::get('/categories/create', 'CategoryController@create')->name('category.create');
 Route::post('/categories/store', 'CategoryController@store')->name('category.store');
+
+//Route::get('/settings', 'SettingController@index')->name('setting.index');
+Route::get('/settings', 'SettingController@create')->name('setting.create');
+Route::post('/settings/store', 'SettingController@store')->name('setting.store');

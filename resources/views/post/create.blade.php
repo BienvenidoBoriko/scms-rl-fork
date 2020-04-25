@@ -96,15 +96,4 @@
         <button class="btn btn-primary ml-3 btn-secondary" type="button">Volver</button>
     </form>
 </section>
-@php
-    print_r($errors)
-@endphp
-
-
-<script>
-    CKEDITOR.replace( 'contenido', {
-        filebrowserUploadUrl: "{{route('post.image.upload', ['_token' => csrf_token() ])}}",
-        filebrowserUploadMethod: 'form'
-    });
-</script>
 @endsection

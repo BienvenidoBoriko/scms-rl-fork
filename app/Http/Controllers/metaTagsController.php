@@ -33,12 +33,12 @@ class metaTagsController extends Controller
             'type' => ['required','string',Rule::in(['post','tag','category','author'])],
             'id_owner' => ['required','string','max:20'],
         ]);
-
+/*
         if ($validator->fails()) {
             return redirect('post/create')
                         ->withErrors($validator)
                         ->withInput();
-        }
+        } */
 
         return metaTags::create([
                 'name' => $data['name'],
