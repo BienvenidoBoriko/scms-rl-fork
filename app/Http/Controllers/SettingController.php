@@ -34,8 +34,8 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-
-        foreach($request as $setting => $value) {
+        $input = $request->all();
+        foreach($input as $setting => $value) {
             $data = [
 
                 'name' => $setting,

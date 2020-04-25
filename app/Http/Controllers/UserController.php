@@ -88,6 +88,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+       $user= User::findOrFail($id);
+
+        if (Auth::user()->id = $user->id && $this->user->role != "admin") {
+            return redirect()->route('tag.index')->with('Error', 'No estas Autorizado');
+
+        }
+        try
+        {
+            $user->delete();
+            return redirect()->route('post.index')->with('success', 'usuario eliminado correctamente!');
+        } catch (Exception $e) {
+            return redirect()->route('post.index')->with('Error_eliminando_usuario', $e->getStatusCode());
+        }
     }
 }

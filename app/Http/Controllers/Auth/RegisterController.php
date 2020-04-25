@@ -78,15 +78,20 @@ class RegisterController extends Controller
     protected function create(Request $request)
     {
         try {
-            $pathProfileImg = $request->file('profile_img')->storeAs(
+             $request->file('profile_img')->storeAs(
                 'public/users/'.$request['name'].'/avatar',
                 $request->file('profile_img')->getClientOriginalName()
             );
 
-            $pathCovImg = $request->file('cover_img')->storeAs(
+            $pathProfileImg = "storage/users/".$request['name']."/avatar/".$request->file('profile_img')->getClientOriginalName();
+
+            $request->file('cover_img')->storeAs(
                 'public/users/'.$request['name'].'/cover',
                 $request->file('cover_img')->getClientOriginalName()
             );
+
+            $pathCovImg = "storage/users/".$request['name']."/cover/".$request->file('cover_img')->getClientOriginalName();
+
             DB::beginTransaction();
 
             $user= User::create([

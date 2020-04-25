@@ -14,14 +14,22 @@
                 <li class="nav-item dropdown  user-menu">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="http://via.placeholder.com/160x160{{-- Auth::user()->profile_img --}}"
+                        <img src="{{ asset(Auth::user()->profile_img) }}"
                             class="user-image" alt="User Image">
-                        <span class="hidden-xs">bootstrap develop</span><i class="fa fa-circle text-success"></i>
+                        <span class="hidden-xs">{{ Auth::user()->name }}</span><i class="fa fa-circle text-success"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">{{-- Auth::user()->name --}}bootstrap develop</a>
+                        <a class="dropdown-item" href="#">{{ Auth::user()->name }}</a>
                         <a class="dropdown-item" href="#">editar perfil</a>
-                        <a class="dropdown-item" href="#">salir</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            salir
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                    </form>
                     </div>
                 </li>
             </ul>

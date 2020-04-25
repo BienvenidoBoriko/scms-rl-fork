@@ -58,10 +58,13 @@ class PostController extends Controller
             'category_id' => ['required','string','nullable','max:30']
         ]);
 
-            $pathFeaturedImg = $request->file('featured_img')->storeAs(
+        $request->file('featured_img')->storeAs(
                 'public/posts/'.$request->input('title').'/featured',
                 $request->file('featured_img')->getClientOriginalName()
             );
+
+        $pathFeaturedImg = 'storage/posts/'.$request->input('title').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+
             $data = [
 
             'title' => $request->input('title'),
@@ -144,6 +147,13 @@ class PostController extends Controller
             'category_id' => ['required','string','nullable','max:30']
         ]);
 
+        $request->file('featured_img')->storeAs(
+            'posts/'.$request->input('title').'/featured',
+            $request->file('profile_img')->getClientOriginalName()
+        );
+        $pathFeaturedImg = 'storage/posts/'.$request->input('title').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+
+
         $data = [
 
             'title' => $request->input('title'),
@@ -163,10 +173,6 @@ class PostController extends Controller
         /*if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
-        $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'posts/'.$request->input('title').'/featured',
-            $request->file('profile_img')->getClientOriginalName()
-        );
 
         $post = Post::find($id);
         $post->update($data);

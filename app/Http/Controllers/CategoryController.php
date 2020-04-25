@@ -43,9 +43,12 @@ class CategoryController extends Controller
             'visibility'=>['required','string']
         ]);
 
-        $pathFeaturedImg = $request->file('featured_img')->storeAs(
+        $request->file('featured_img')->storeAs(
             'public/categories/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
         );
+
+        $pathFeaturedImg = 'storage/categories/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+
         $data = [
 
             'name' => $request->input('name'),
@@ -100,9 +103,10 @@ class CategoryController extends Controller
             'visibility'=>['required','boolean']
         ]);
 
-        $pathFeaturedImg = $request->file('featured_img')->storeAs(
+        $request->file('featured_img')->storeAs(
             'categories/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
         );
+        $pathFeaturedImg = 'storage/categories/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
 
             'name' => $request->input('name'),

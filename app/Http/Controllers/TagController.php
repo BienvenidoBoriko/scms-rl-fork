@@ -42,9 +42,10 @@ class TagController extends Controller
             'meta_desc' => ['required','string','max:200'],
         ]);
 
-        $pathFeaturedImg = $request->file('featured_img')->storeAs(
-            'public/tags/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
+        $request->file('featured_img')->storeAs(
+            'public/tags/'.$request->input('name').'/featured'. \trim($request->file('featured_img')->getClientOriginalName())
         );
+        $pathFeaturedImg = 'storage/tags/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
 
             'name' => $request->input('name'),
@@ -97,9 +98,11 @@ class TagController extends Controller
             'meta_desc' => ['required','string','max:200'],
         ]);
 
-        $pathFeaturedImg = $request->file('featured_img')->storeAs(
+        $request->file('featured_img')->storeAs(
             'tags/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
         );
+        $pathFeaturedImg = 'storage/tags/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+
         $data = [
 
             'name' => $request->input('name'),

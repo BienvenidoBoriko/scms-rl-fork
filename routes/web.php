@@ -18,25 +18,26 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/posts', 'PostController@index')->name('post.index');
+    Route::get('/posts/create', 'PostController@create')->name('post.create');
+    Route::post('/posts/store', 'PostController@store')->name('post.store');
+    Route::post('/posts/image/upload', 'PostController@upload')->name('post.image.upload');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/posts', 'PostController@index')->name('post.index');
-Route::get('/posts/create', 'PostController@create')->name('post.create');
-Route::post('/posts/store', 'PostController@store')->name('post.store');
-Route::post('/posts/image/upload', 'PostController@upload')->name('post.image.upload');
+    Route::get('/authors', 'UserController@index')->name('author.index');
+    Route::get('/authors/create', 'UserController@create')->name('author.create');
+    Route::post('/authors/store', 'Auth\RegisterController@create')->name('author.store');
 
-Route::get('/authors', 'UserController@index')->name('author.index');
-Route::get('/authors/create', 'UserController@create')->name('author.create');
-Route::post('/authors/store', 'Auth\RegisterController@create')->name('author.store');
+    Route::get('/tags', 'TagController@index')->name('tag.index');
+    Route::get('/tags/create', 'TagController@create')->name('tag.create');
+    Route::post('/tags/store', 'TagController@store')->name('tag.store');
 
-Route::get('/tags', 'TagController@index')->name('tag.index');
-Route::get('/tags/create', 'TagController@create')->name('tag.create');
-Route::post('/tags/store', 'TagController@store')->name('tag.store');
+    Route::get('/categories', 'CategoryController@index')->name('category.index');
+    Route::get('/categories/create', 'CategoryController@create')->name('category.create');
+    Route::post('/categories/store', 'CategoryController@store')->name('category.store');
 
-Route::get('/categories', 'CategoryController@index')->name('category.index');
-Route::get('/categories/create', 'CategoryController@create')->name('category.create');
-Route::post('/categories/store', 'CategoryController@store')->name('category.store');
-
-//Route::get('/settings', 'SettingController@index')->name('setting.index');
-Route::get('/settings', 'SettingController@create')->name('setting.create');
-Route::post('/settings/store', 'SettingController@store')->name('setting.store');
+    //Route::get('/settings', 'SettingController@index')->name('setting.index');
+    Route::get('/settings', 'SettingController@create')->name('setting.create');
+    Route::post('/settings/store', 'SettingController@store')->name('setting.store');
+});

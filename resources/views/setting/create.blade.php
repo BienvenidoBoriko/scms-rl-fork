@@ -2,11 +2,13 @@
 
 @section('content')
 <section>
-    <form class="mt-4 mb-2">
+    <form class="mt-4 mb-2" action="{{ route('setting.store') }}" method="POST"
+    enctype="multipart/form-data">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <div class="form-row">
             <div class="col"><label for="titulo">titulo del sitio<br></label><input value="
-            {{ Arr::has($settings,'title') ? $settings->title: ''}}" name="title" class="form-control" type="text"
+            {{  $settings->title }}" name="title" class="form-control" type="text"
                         id="titulo" required="required"></div>
                 <div class="col"><label for="titulo">descripcion corta<br></label><input value="
                     {{ Arr::has($settings,'desc') ? $settings->desc : ''}}" name="desc" class="form-control"
@@ -38,4 +40,8 @@
     class="btn btn-primary ml-3 btn-secondary" href="{{ URL::previous() }}">Volver</a>
     </form>
 </section>
+
+@php
+    print_r($errors)
+@endphp
 @endsection
