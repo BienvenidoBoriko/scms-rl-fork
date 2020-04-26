@@ -36,18 +36,18 @@ class CategoryController extends Controller
          $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:100'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
             'visibility'=>['required','string']
         ]);
 
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'public/categories/'.$request->input('name').'/featured', \trim($request->file('featured_img')->getClientOriginalName())
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-
-        $pathFeaturedImg = 'storage/categories/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
         $data = [
 
@@ -96,17 +96,18 @@ class CategoryController extends Controller
         $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:100'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
             'visibility'=>['required','boolean']
         ]);
 
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'categories/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'storage/categories/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
 
             'name' => $request->input('name'),

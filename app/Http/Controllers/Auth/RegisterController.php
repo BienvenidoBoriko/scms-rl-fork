@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::AUTHORS;
 
     /**
      * Create a new controller instance.
@@ -54,8 +54,8 @@ class RegisterController extends Controller
     {
         return Validator::make($request, [
             'name' => ['required', 'string', 'max:255'],
-            'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp', 'max:2048'],
-            'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp', 'max:2048'],
+            'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp'],
+            'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp'],
             'bio'=>['required', 'string', 'max:255'],
             'github'=>['string', 'max:70'],
             'website'=>['string', 'max:100'],
@@ -78,19 +78,21 @@ class RegisterController extends Controller
     protected function create(Request $request)
     {
         try {
+
+            $ran=rand(0,1000);
              $request->file('profile_img')->storeAs(
-                'public/users/'.$request['name'].'/avatar',
-                $request->file('profile_img')->getClientOriginalName()
+                'public/uploads/',
+                $ran . $request->file('profile_img')->getClientOriginalName()
             );
 
-            $pathProfileImg = "storage/users/".$request['name']."/avatar/".$request->file('profile_img')->getClientOriginalName();
+            $pathProfileImg = 'storage/uploads/'. $ran . $request->file('profile_img')->getClientOriginalName();
 
             $request->file('cover_img')->storeAs(
-                'public/users/'.$request['name'].'/cover',
-                $request->file('cover_img')->getClientOriginalName()
+                'public/uploads/',
+                $ran . $request->file('cover_img')->getClientOriginalName()
             );
 
-            $pathCovImg = "storage/users/".$request['name']."/cover/".$request->file('cover_img')->getClientOriginalName();
+            $pathCovImg = "storage/uploads/". $ran . $request->file('cover_img')->getClientOriginalName();
 
             DB::beginTransaction();
 
@@ -125,6 +127,8 @@ class RegisterController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
+            return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
+
         }
 
         return redirect()->route('author.index')->with('success', 'autor creado correctamente!');

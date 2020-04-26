@@ -33,19 +33,20 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+
          $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:100'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
         ]);
-
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'public/tags/'.$request->input('name').'/featured'. \trim($request->file('featured_img')->getClientOriginalName())
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'storage/tags/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
 
             'name' => $request->input('name'),
@@ -92,16 +93,17 @@ class TagController extends Controller
         $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required','max:70'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
         ]);
 
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'tags/'.$request->input('name').'/featured', $request->file('featured_img')->getClientOriginalName()
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'storage/tags/'.$request->input('name').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
         $data = [
 

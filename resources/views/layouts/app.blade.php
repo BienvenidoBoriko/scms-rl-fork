@@ -88,7 +88,7 @@
     </nav>--}}
 
     <main class="">
-        <x-navbar />
+       <x-navbar />
         <section class="d-flex flex-wrap">
             <x-sidebar />
             <section class="ml-auto mr-auto pt-3" style="width: calc(100vw - 290px)">

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Post;
 use App\rol;
+use DB;
+use App\Meta_tags;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 
@@ -43,7 +46,75 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp'],
+            'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp'],
+            'bio'=>['required', 'string', 'max:255'],
+            'github'=>['string', 'max:70'],
+            'website'=>['string', 'max:100'],
+            'twitter'=>['string', 'max:50'],
+            'slug'=>['required', 'string', 'max:50'],
+            'rol_id'=>['required', 'integer'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+        try {
+            $tiempo=time();
+             $request->file('profile_img')->storeAs(
+                'public/uploads/',
+                $tiempo . trim($request->file('profile_img')->getClientOriginalName())
+            );
+
+            $pathProfileImg = 'uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
+
+            $request->file('cover_img')->storeAs(
+                'public/uploads/',
+                $tiempo . trim($request->file('cover_img')->getClientOriginalName())
+            );
+
+            $pathCovImg = "uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
+
+            DB::beginTransaction();
+
+            $user= User::create([
+                'name' => $request['name'],
+                'status'=>'ofline',
+                'profile_img'=>$pathProfileImg,
+                'cover_img'=>$pathCovImg,
+                'bio'=>$request['bio'],
+                'github'=>$request['github'],
+                'website'=>$request['website'],
+                'twitter'=>$request['twitter'],
+                'slug'=>$request['slug'],
+                'rol_id'=>$request['rol_id'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                ]);
+
+            Meta_tags::create([
+                    'name' => 'meta_title',
+                    'value'=>$request['meta_title'],
+                    'type'=>'author',
+                    'id_owner'=>$user->id
+                ]);
+
+            Meta_tags::create([
+                    'name' => 'meta_desc',
+                    'value'=>$request['meta_desc'],
+                    'type'=>'author',
+                    'id_owner'=>$user->id
+                ]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
+
+        }
+
+        return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
     }
 
     /**

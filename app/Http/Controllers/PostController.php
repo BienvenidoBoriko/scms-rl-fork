@@ -58,12 +58,11 @@ class PostController extends Controller
             'category_id' => ['required','string','nullable','max:30']
         ]);
 
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-                'public/posts/'.$request->input('title').'/featured',
-                $request->file('featured_img')->getClientOriginalName()
-            );
-
-        $pathFeaturedImg = 'storage/posts/'.$request->input('title').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+        );
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
             $data = [
 
@@ -147,12 +146,11 @@ class PostController extends Controller
             'category_id' => ['required','string','nullable','max:30']
         ]);
 
+        $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'posts/'.$request->input('title').'/featured',
-            $request->file('profile_img')->getClientOriginalName()
+            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'storage/posts/'.$request->input('title').'/featured/'.\trim($request->file('featured_img')->getClientOriginalName());
-
+        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
         $data = [
 
@@ -190,14 +188,11 @@ class PostController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, ['upload' => ['required','image'], ]);
-
-         $request->file('upload')->storeAs(
-            'public/posts/upload/images',
-            $request->file('upload')->getClientOriginalName()
+        $tiempo=time();
+        $request->file('upload')->storeAs(
+            'public/uploads/', $tiempo .  \trim($request->file('upload')->getClientOriginalName())
         );
-
-        $path = 'storage/posts/upload/images/'.$request->file('upload')->getClientOriginalName();
-
+        $path = 'uploads/'. $tiempo .\trim($request->file('upload')->getClientOriginalName());
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');
         $url = asset($path);
         $msg = 'Image successfully uploaded';
