@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TagSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,17 +11,15 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tags')->insert([
-            'name'=>'xbox',
-            'description'=>'todo sobre xbox',
+        DB::table('categories')->insert([
+            'name'=>'videojuegos',
+            'description'=>'todo sobre videojuegos',
             'featured_img '=>'storage/uploads/15878987251366_2000.jpg',
-            'slug'=>'xbox',
-            'visibility '=>'si',
-            'meta_desc'=>'todo sobre xbox',
-            'meta_title'=>'xbox',
+            'slug'=>'videojuegos',
+            'meta_desc'=>'todo sobre videojuegos',
+            'meta_title'=>'videojuegos',
             'created_at '=>'2020-04-26 10:58:45',
             'updated_at'=>'2020-04-26 10:58:45'
         ]);
-
     }
 }
