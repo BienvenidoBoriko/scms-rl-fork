@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $fillable = [
         'title','status','user_id','published_at','plain_text',
-        'html','featured_img','cover_image','featured','custom_except','slug','category_id'
+        'html','featured_img','featured','custom_except','slug','category_id'
     ];
 
     public function tags()

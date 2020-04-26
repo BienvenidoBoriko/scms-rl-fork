@@ -68,14 +68,14 @@ class UserController extends Controller
                 $tiempo . trim($request->file('profile_img')->getClientOriginalName())
             );
 
-            $pathProfileImg = 'uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
+            $pathProfileImg = 'storage/uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
 
             $request->file('cover_img')->storeAs(
                 'public/uploads/',
                 $tiempo . trim($request->file('cover_img')->getClientOriginalName())
             );
 
-            $pathCovImg = "uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
+            $pathCovImg = "storage/uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
 
             DB::beginTransaction();
 

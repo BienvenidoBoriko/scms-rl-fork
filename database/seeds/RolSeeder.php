@@ -13,12 +13,12 @@ class RolSeeder extends Seeder
     {
         DB::table('rols')->insert([
             'name' => 'admin',
-            'desc'=>'admin del sitio',
+            'description'=>'admin del sitio',
             'created_at'=>'2020/04/25',
         ]);
         DB::table('rols')->insert([
             'name' => 'autor',
-            'desc'=>'autor del sitio',
+            'description'=>'autor del sitio',
             'created_at'=>'2020/04/25',
         ]);
     }

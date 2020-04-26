@@ -43,7 +43,7 @@ class PostController extends Controller
     {
         try {
             $this->validate($request, [
-            'title' => ['required','string','max:20'],
+            'title' => ['required','string','max:200'],
            // 'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
@@ -52,17 +52,17 @@ class PostController extends Controller
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
-            'custom_except' => ['required','string','nullable','max:100'],
-            'slug' => ['required','string','max:30'],
+            'custom_except' => ['required','string','nullable','max:200'],
+            'slug' => ['required','string','max:200'],
             'tags' => ['required','array'],
-            'category_id' => ['required','string','nullable','max:30']
+            'category_id' => ['required','string','nullable']
         ]);
 
         $tiempo=time();
         $request->file('featured_img')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
             $data = [
 
@@ -130,7 +130,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => ['required','string','max:20'],
+            'title' => ['required','string','max:200'],
             'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
@@ -140,17 +140,17 @@ class PostController extends Controller
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
-            'custom_except' => ['required','string','nullable','max:100'],
-            'slug' => ['required','string','max:30'],
-            'tags' => ['required','array','max:200'],
-            'category_id' => ['required','string','nullable','max:30']
+            'custom_except' => ['required','string','nullable'],
+            'slug' => ['required','string','max:20'],
+            'tags' => ['required','array'],
+            'category_id' => ['required','string','nullable']
         ]);
 
         $tiempo=time();
         $request->file('featured_img')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
         $data = [
 
@@ -192,7 +192,7 @@ class PostController extends Controller
         $request->file('upload')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('upload')->getClientOriginalName())
         );
-        $path = 'uploads/'. $tiempo .\trim($request->file('upload')->getClientOriginalName());
+        $path = 'storage/uploads/'. $tiempo .\trim($request->file('upload')->getClientOriginalName());
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');
         $url = asset($path);
         $msg = 'Image successfully uploaded';

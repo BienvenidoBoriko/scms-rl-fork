@@ -46,7 +46,7 @@ class TagController extends Controller
         $request->file('featured_img')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
 
             'name' => $request->input('name'),
@@ -103,7 +103,7 @@ class TagController extends Controller
         $request->file('featured_img')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
-        $pathFeaturedImg = 'uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
         $data = [
 
