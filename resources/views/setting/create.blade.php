@@ -8,7 +8,7 @@
         <div class="form-group">
             <div class="form-row">
             <div class="col"><label for="titulo">titulo del sitio<br></label><input value="
-            {{  $settings->title }}" name="title" class="form-control" type="text"
+            {{--  $settings->title --}}" name="title" class="form-control" type="text"
                         id="titulo" required="required"></div>
                 <div class="col"><label for="titulo">descripcion corta<br></label><input value="
                     {{ Arr::has($settings,'desc') ? $settings->desc : ''}}" name="desc" class="form-control"
