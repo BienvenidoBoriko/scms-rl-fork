@@ -16,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return response([ 'users' => UserResource::collection($user), 'message' => 'Retrieved successfully'], 200);
+        $users = User::all();
+        return response([ 'users' => UserResource::collection($users), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
-        return response([ 'user' => new UserResource($ceo), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
 
     }
 
