@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Category;
+use App\Http\Resources\CategoryResource;
 use App\Http\Controllers\Controller;
-use App\Tag;
-use App\Http\Resources\TagResource;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
-        return response([ 'tags' => TagResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
+        $categories = Category::all();
+        return response([ 'categories' => CategoryResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
 
     }
 
@@ -38,53 +38,53 @@ class TagController extends Controller
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
+            'visibility'=>['required','string']
         ]);
 
         if($validator->fails()){
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
-        $tag = Tag::create($data);
+        $category = Category::create($data);
 
 
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Created successfully'], 200);
+        return response([ 'category' => new CategoryResource($category), 'message' => 'Created successfully'], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show(Category $category)
     {
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'category' => new CategoryResource($category), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tag  $tag
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Category $category)
     {
-        $tag->update($request->all());
+        $category->update($request->all());
 
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
-
+        return response([ 'category' => new CategoryResource($category), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy(Category $category)
     {
-        $tag->delete();
+        $category->delete();
 
         return response(['message' => 'tag Deleted']);
     }
