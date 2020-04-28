@@ -18,7 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::apiResource('/users', 'API\UserController'); //->middleware('auth:api');
-Route::apiResource('/posts', 'API\PostController');
-Route::apiResource('/tags', 'API\TagController');
-Route::apiResource('/categories', 'API\CategoryController');
+Route::post('/login', 'Api\AuthController@login');
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::apiResource('/users', 'API\UserController');
+    Route::apiResource('/posts', 'API\PostController');
+    Route::apiResource('/tags', 'API\TagController');
+    Route::apiResource('/categories', 'API\CategoryController');
+});
