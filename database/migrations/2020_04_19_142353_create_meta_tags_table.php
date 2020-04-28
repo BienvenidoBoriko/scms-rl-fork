@@ -17,8 +17,8 @@ class CreateMetaTagsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('value');
-            $table->string('type');
-            $table->string('id_owner');
+            $table->unsignedBigInteger('post_id');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });
     }

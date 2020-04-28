@@ -28,13 +28,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        /* $data = $request->all();
+         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'name' => 'required|max:255',
-            'year' => 'required|max:255',
-            'company_headquarters' => 'required|max:255',
-            'what_company_does' => 'required'
+            'name' => ['required', 'string', 'max:255'],
+            'profile_img'=>['required', 'string'],
+            'cover_img'=>['required', 'string'],
+            'bio'=>['required', 'string', 'max:255'],
+            'github'=>['string', 'max:70'],
+            'website'=>['string', 'max:100'],
+            'twitter'=>['string', 'max:50'],
+            'slug'=>['required', 'string', 'max:50'],
+            'rol_id'=>['required', 'integer'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
         if($validator->fails()){
@@ -43,8 +52,8 @@ class UserController extends Controller
 
         $user = User::create($data);
 
+
         return response([ 'user' => new UserResource($user), 'message' => 'Created successfully'], 200);
- */
     }
 
     /**
@@ -68,7 +77,10 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->update($request->all());
+
+        return response([ 'user' => new UserResource($ceo), 'message' => 'Retrieved successfully'], 200);
+
     }
 
     /**
@@ -79,6 +91,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return response(['message' => 'User Deleted']);
     }
 }

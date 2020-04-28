@@ -86,15 +86,13 @@ class PostController extends Controller
             Meta_tags::create([
                     'name' => 'meta_title',
                     'value'=>$request->input('meta_title'),
-                    'type'=>'post',
-                    'id_owner'=>$request->input('author_id')
+                    'post_id'=>$post->id
                 ]);
 
             Meta_tags::create([
                     'name' => 'meta_desc',
                     'value'=>$request->input('meta_desc'),
-                    'type'=>'post',
-                    'id_owner'=>$request->input('author_id')
+                    'post_id'=>$post->id
                 ]);
             DB::commit();
         } catch (Exception $e) {

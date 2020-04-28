@@ -16,6 +16,11 @@ class Post extends Model
         return $this->belongsToMany('App\Tag','post_tags')->withTimeStamps();
     }
 
+    public function metaTags()
+    {
+        return $this->hasMany(Meta_tags::class);
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Category');

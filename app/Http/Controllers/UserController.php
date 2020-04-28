@@ -10,7 +10,6 @@ use App\Meta_tags;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-
 class UserController extends Controller
 {
     /**
@@ -33,7 +32,7 @@ class UserController extends Controller
     public function create()
     {
         //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
-        return view('author.create',[
+        return view('author.create', [
             'rols'=> rol::all()
         ]);
     }
@@ -46,7 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request, [
             'name' => ['required', 'string', 'max:255'],
             'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp'],
             'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp'],
@@ -61,25 +60,28 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-        try {
-            $tiempo=time();
-             $request->file('profile_img')->storeAs(
-                'public/uploads/',
-                $tiempo . trim($request->file('profile_img')->getClientOriginalName())
-            );
 
-            $pathProfileImg = 'storage/uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
+        if ($validator->fails()) {
+            return redirect()->route('author.index')->with(['error' => $validator->errors()], 'Validation Error');
+        }
 
-            $request->file('cover_img')->storeAs(
-                'public/uploads/',
-                $tiempo . trim($request->file('cover_img')->getClientOriginalName())
-            );
+        $tiempo=time();
+        $request->file('profile_img')->storeAs(
+            'public/uploads/',
+            $tiempo . trim($request->file('profile_img')->getClientOriginalName())
+        );
 
-            $pathCovImg = "storage/uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
+        $pathProfileImg = 'storage/uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
 
-            DB::beginTransaction();
+        $request->file('cover_img')->storeAs(
+            'public/uploads/',
+            $tiempo . trim($request->file('cover_img')->getClientOriginalName())
+        );
 
-            $user= User::create([
+        $pathCovImg = "storage/uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
+
+
+        $user= User::create([
                 'name' => $request['name'],
                 'status'=>'ofline',
                 'profile_img'=>$pathProfileImg,
@@ -90,29 +92,11 @@ class UserController extends Controller
                 'twitter'=>$request['twitter'],
                 'slug'=>$request['slug'],
                 'rol_id'=>$request['rol_id'],
+                'meta_title'=>$request['meta_title'],
+                'meta_desc'=>$request['meta_desc'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
                 ]);
-
-            Meta_tags::create([
-                    'name' => 'meta_title',
-                    'value'=>$request['meta_title'],
-                    'type'=>'author',
-                    'id_owner'=>$user->id
-                ]);
-
-            Meta_tags::create([
-                    'name' => 'meta_desc',
-                    'value'=>$request['meta_desc'],
-                    'type'=>'author',
-                    'id_owner'=>$user->id
-                ]);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
-
-        }
 
         return redirect()->route('author.index')->with('success', 'autor creado correctamente!');
     }
@@ -159,14 +143,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-       $user= User::findOrFail($id);
+        $user= User::findOrFail($id);
 
         if (Auth::user()->id = $user->id && $this->user->role != "admin") {
             return redirect()->route('tag.index')->with('Error', 'No estas Autorizado');
-
         }
-        try
-        {
+        try {
             $user->delete();
             return redirect()->route('post.index')->with('success', 'usuario eliminado correctamente!');
         } catch (Exception $e) {
