@@ -42,7 +42,7 @@
                         <form action="{{route('author.destroy', $author->id)}}" method="post">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Are you sure you want to delete?')"><i class="fa fa-timex"></i> Delete</button>
+                            <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
                         </form>
                     </td>
                 </tr>

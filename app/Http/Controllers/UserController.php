@@ -146,7 +146,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
 
-        if (Auth::user()->id == $user->id || $user->rol_id != '1') {
+        if (Auth::user()->id == $user->id || $user->rol_id != 1) {
             return redirect()->route('author.index')->with('error', 'No estas Autorizado');
         }else{
             try {

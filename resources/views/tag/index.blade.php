@@ -20,17 +20,23 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>&nbsp; &nbsp;&nbsp;<input type="checkbox"></th>
                     <th>Nombre</th>
                     <th>Numero de entradas</th>
+                    <th>Borrar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($tags as $tag)
                     <tr>
-                        <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
                         <td> {{ $tag->name }} </td>
                         <td> {{ $tag->posts_count }} </td>
+                        <td>
+                            <form action="{{route('tag.destroy', $tag->id)}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

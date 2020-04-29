@@ -23,14 +23,9 @@ class UserSeeder extends Seeder
             'slug'=>'ejemplo.es',
             'rol_id'=> 1,
             'email' => 'ejemplo@gmail.com',
+            'meta_title'=>'bboriko',
+            'meta_desc'=>'usuario bboriko',
             'password' => Hash::make('password'),
-        ]);
-
-        DB::table('meta_tags')->insert([
-            'name' => 'meta_title',
-            'value'=>'bboriko',
-            'type'=>'author',
-            'id_owner'=>'1'
         ]);
 
         DB::table('users')->insert([
@@ -45,14 +40,10 @@ class UserSeeder extends Seeder
             'slug'=>'ejemplo2.es',
             'rol_id'=> 2,
             'email' => 'ejemplo2@gmail.com',
+            'meta_title'=>'bboriko2',
+            'meta_desc'=>'usuario bboriko2',
             'password' => Hash::make('password'),
         ]);
 
-        DB::table('meta_tags')->insert([
-            'name' => 'meta_title',
-            'value'=>'bboriko2',
-            'type'=>'author',
-            'id_owner'=>'2'
-        ]);
     }
 }

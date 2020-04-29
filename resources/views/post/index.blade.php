@@ -23,18 +23,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>&nbsp; &nbsp;&nbsp;<input type="checkbox"></th>
                     <th>Titulo</th>
                     <th>Categoria</th>
                     <th>Etiquetas</th>
                     <th>Featured</th>
+                    <th>Borrar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($posts as $post)
                     <tr>
-                        <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
-                        <td> {{ $post->title }} </td>
+                        <td> {{Str::limit( $post->title,50) }} </td>
                         <td> {{ $post->category->name }} </td>
                         <td>
                             @foreach($post->tags as $tag)
@@ -43,6 +42,13 @@
                         </td>
                         <td>
                             @if($post->featured==true) si @else no @endif
+                        </td>
+                        <td>
+                            <form action="{{route('post.destroy', $post->id)}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name','profile_img','cover_img','email','bio','status',
         'password', 'github','website','twitter',
-        'slug','rol_id'
+        'slug','rol_id','meta_title','meta_desc'
     ];
 
     /**

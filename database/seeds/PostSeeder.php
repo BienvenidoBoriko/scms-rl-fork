@@ -40,5 +40,17 @@ class PostSeeder extends Seeder
             'created_at'=>'2020-04-26 11:04:29',
             'updated_at'=>'2020-04-26 11:04:29'
         ]);
+
+        DB::table('meta_tags')->insert([
+            'name' => 'meta_title',
+            'value'=>'Xbox Series S',
+            'post_id'=>1,
+        ]);
+
+        DB::table('meta_tags')->insert([
+            'name' => 'meta_desc',
+            'value'=>'Nuevos datos plantean el anuncio en mayo de la Xbox Series S, una versión más asequible de las Xbox Series X',
+            'post_id'=>1,
+        ]);
     }
 }

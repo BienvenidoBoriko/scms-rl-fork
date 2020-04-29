@@ -24,16 +24,15 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>&nbsp; &nbsp;&nbsp;<input type="checkbox"></th>
-                    <th>Nombre</th>
+                    <th>Nombre</>
                     <th>Numero de entradas</th>
                     <th>Es Visible</th>
+                    <th>Borrar</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($categories as $category)
                     <tr>
-                        <td>&nbsp; &nbsp;&nbsp;<input type="checkbox"></td>
                         <td>{{ $category->name }} </td>
                         <td>{{ $category->posts_count }}</td>
                         <td> {{ $category->visibility }} </td>
@@ -41,7 +40,7 @@
                             <form action="{{route('category.destroy', $category->id)}}" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Are you sure you want to delete?')"><i class="fa fa-timex"></i> Delete</button>
+                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
                             </form>
 
                         </td>
