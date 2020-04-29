@@ -37,7 +37,14 @@
                         <td>{{ $category->name }} </td>
                         <td>{{ $category->posts_count }}</td>
                         <td> {{ $category->visibility }} </td>
+                        <td>
+                            <form action="{{route('category.destroy', $category->id)}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Are you sure you want to delete?')"><i class="fa fa-timex"></i> Delete</button>
+                            </form>
 
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -27,7 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/authors', 'UserController@index')->name('author.index');
     Route::get('/authors/create', 'UserController@create')->name('author.create');
-    Route::post('/authors/store', 'UserController@store')->name('author.store');
+    Route::put('/authors/store', 'UserController@store')->name('author.store');
+    Route::delete("/authors/destroy/{user}", 'UserController@destroy')->name('author.destroy');
 
     Route::get('/tags', 'TagController@index')->name('tag.index');
     Route::get('/tags/create', 'TagController@create')->name('tag.create');

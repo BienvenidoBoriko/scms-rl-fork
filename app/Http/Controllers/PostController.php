@@ -9,6 +9,7 @@ use App\Tag;
 use App\Meta_tags;
 use App\Category;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RolController extends Controller
 {

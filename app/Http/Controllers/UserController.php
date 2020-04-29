@@ -8,7 +8,9 @@ use App\rol;
 use DB;
 use App\Meta_tags;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         return view('author.index', [
-            'authors' => User::withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
+            'authors' => User::with('rol')->withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
         ]);
     }
 
@@ -143,16 +145,17 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user= User::findOrFail($id);
 
-        if (Auth::user()->id = $user->id && $this->user->role != "admin") {
-            return redirect()->route('tag.index')->with('Error', 'No estas Autorizado');
+        if (Auth::user()->id == $user->id || $user->rol_id != '1') {
+            return redirect()->route('author.index')->with('error', 'No estas Autorizado');
+        }else{
+            try {
+                $user->delete();
+                return redirect()->route('author.index')->with('success', 'usuario eliminado correctamente!');
+            } catch (Exception $e) {
+                return redirect()->route('author.index')->with('error', $e->getStatusCode());
+            }
         }
-        try {
-            $user->delete();
-            return redirect()->route('post.index')->with('success', 'usuario eliminado correctamente!');
-        } catch (Exception $e) {
-            return redirect()->route('post.index')->with('Error_eliminando_usuario', $e->getStatusCode());
-        }
+
     }
 }

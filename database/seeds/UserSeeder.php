@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'website'=>'ejemplo.es',
             'twitter'=>'ejemplo.es',
             'slug'=>'ejemplo.es',
-            'rol_id'=>'1',
+            'rol_id'=> 1,
             'email' => 'ejemplo@gmail.com',
             'password' => Hash::make('password'),
         ]);
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'website'=>'ejemplo2.es',
             'twitter'=>'ejemplo2.es',
             'slug'=>'ejemplo2.es',
-            'rol_id'=>'1',
+            'rol_id'=> 2,
             'email' => 'ejemplo2@gmail.com',
             'password' => Hash::make('password'),
         ]);
