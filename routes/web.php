@@ -42,6 +42,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/categories/destroy/{id}', 'CategoryController@destroy')->name('category.destroy');
 
     //Route::get('/settings', 'SettingController@index')->name('setting.index');
-    Route::get('/settings', 'SettingController@create')->name('setting.create');
-    Route::post('/settings/store', 'SettingController@store')->name('setting.store');
+    Route::get('/settings', 'SettingController@index')->name('setting.index');
+    Route::post('/settings/update', 'SettingController@update')->name('setting.update');
 });

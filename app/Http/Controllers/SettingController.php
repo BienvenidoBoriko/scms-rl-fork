@@ -5,17 +5,23 @@ use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 
 class SettingController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Setting::class, 'setting');
+       // $this->authorizeResource(Setting::class, 'setting');
     }
 
     public function index()
     {
-
+        return view('setting.index', ['title'=>Setting::where('name','title')->first(),
+        'desc'=>Setting::where('name','desc')->first(),'lang'=>Setting::where('name','lang')->first(),
+        'admin'=>Setting::where('name','admin')->first(),
+        'users' => User::with('rol')->get()
+        ]);
     }
 
     /**
@@ -25,9 +31,7 @@ class SettingController extends Controller
      */
     public function create()
     {
-        return view('setting.create', ['settings'=>Setting::all(),
-        'users' => User::with('rol')->get()
-        ]);
+
         //return view('post.create');
     }
 
@@ -40,7 +44,7 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+        /* $input = $request->all();
         foreach($input as $setting => $value) {
             $data = [
 
@@ -51,7 +55,7 @@ class SettingController extends Controller
 
             Setting::create($data);
         }
-        return redirect()->route('setting.create')->with('success', 'ajustes guardados correctamente!');
+        return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!'); */
     }
 
     /**
@@ -61,7 +65,8 @@ class SettingController extends Controller
      * @return Factory|View
      */
     public function edit($id)
-    {//
+    {
+//
     }
 
     /**
@@ -72,9 +77,20 @@ class SettingController extends Controller
      * @return RedirectResponse
      * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $settings = $request->all();
+        foreach($settings as $name => $value) {
+            $data = [
+
+                'name' => $name,
+                'value' => $value,
+                'type' => 'page'
+            ];
+            $setting = Setting::where('name',$name);
+            $setting ->update($data);
+        }
+        return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!');
     }
 
     /**

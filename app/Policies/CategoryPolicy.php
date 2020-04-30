@@ -4,6 +4,9 @@ namespace App\Policies;
 
 use App\Category;
 use App\User;
+use App\rol;
+use Illuminate\Support\Str;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CategoryPolicy

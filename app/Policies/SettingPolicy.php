@@ -4,7 +4,9 @@ namespace App\Policies;
 
 use App\Setting;
 use App\User;
+use App\rol;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Str;
 
 class SettingPolicy
 {
@@ -54,9 +56,12 @@ class SettingPolicy
      */
     public function update(User $user, Setting $setting)
     {
-        $rol=rol::find($user->rol_id);
-       return Str::of('admin')->exactly($rol->name);
+        return true;
+        /* $rol=rol::find($user->rol_id);
+       return Str::of('admin')->exactly($rol->name); */
     }
+
+
 
     /**
      * Determine whether the user can delete the model.
