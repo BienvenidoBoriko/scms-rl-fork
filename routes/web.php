@@ -43,5 +43,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::get('/settings', 'SettingController@index')->name('setting.index');
     Route::get('/settings', 'SettingController@index')->name('setting.index');
-    Route::post('/settings/update', 'SettingController@update')->name('setting.update');
+    Route::post('/settings/update', 'SettingController@store')->name('setting.store');
 });

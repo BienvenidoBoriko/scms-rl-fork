@@ -12,7 +12,7 @@ class SettingController extends Controller
 {
     public function __construct()
     {
-       // $this->authorizeResource(Setting::class, 'setting');
+        $this->authorizeResource(Setting::class, 'setting');
     }
 
     public function index()
@@ -44,18 +44,19 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        /* $input = $request->all();
-        foreach($input as $setting => $value) {
+        $settings = $request->all();
+        foreach($settings as $name => $value) {
             $data = [
 
-                'name' => $setting,
+                'name' => $name,
                 'value' => $value,
                 'type' => 'page'
             ];
-
+            $setting = Setting::where('name',$name);
+            $setting->update($data);
             Setting::create($data);
         }
-        return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!'); */
+        return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!');
     }
 
     /**
@@ -79,19 +80,7 @@ class SettingController extends Controller
      */
     public function update(Request $request)
     {
-        $settings = $request->all();
-        foreach($settings as $name => $value) {
-            $data = [
-
-                'name' => $name,
-                'value' => $value,
-                'type' => 'page'
-            ];
-            $setting = Setting::where('name',$name);
-            $setting ->update($data);
         }
-        return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -101,7 +90,7 @@ class SettingController extends Controller
      */
     public function destroy($id)
     {
-       // Setting::find($id)->delete();
+        //Setting::find($id)->delete();
 
     }
 }

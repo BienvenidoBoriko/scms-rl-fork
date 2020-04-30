@@ -2,7 +2,7 @@
 
 @section('content')
 <section>
-    <form class="mt-4 mb-2" action="{{ route('setting.update') }}" method="POST"
+    <form class="mt-4 mb-2" action="{{ route('setting.store') }}" method="POST"
     enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">

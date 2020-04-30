@@ -20,7 +20,8 @@ class SettingPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+       return Str::of('admin')->exactly($rol->name);
     }
 
     /**
@@ -32,7 +33,8 @@ class SettingPolicy
      */
     public function view(User $user, Setting $setting)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+       return Str::of('admin')->exactly($rol->name);
     }
 
     /**
@@ -44,7 +46,7 @@ class SettingPolicy
     public function create(User $user)
     {
         $rol=rol::find($user->rol_id);
-        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
+       return Str::of('admin')->exactly($rol->name);
     }
 
     /**
@@ -54,11 +56,11 @@ class SettingPolicy
      * @param  \App\Setting  $setting
      * @return mixed
      */
-    public function update(User $user, Setting $setting)
+    public function update(User $user)
     {
-        return true;
         /* $rol=rol::find($user->rol_id);
        return Str::of('admin')->exactly($rol->name); */
+       return true;
     }
 
 
