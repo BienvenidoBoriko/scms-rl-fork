@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Setting::class, 'setting');
+    }
+
     public function index()
     {
 
