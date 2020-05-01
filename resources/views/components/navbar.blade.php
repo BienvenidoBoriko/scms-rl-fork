@@ -19,8 +19,7 @@
                         <span class="hidden-xs">{{ Auth::user()->name }}</span><i class="fa fa-circle text-success"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">{{ Auth::user()->name }}</a>
-                        <a class="dropdown-item" href="#">editar perfil</a>
+                        <a class="dropdown-item" href="{{ route('author.edit',Auth::user()->id)}}">editar perfil</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             salir
