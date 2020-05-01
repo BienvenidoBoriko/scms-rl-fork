@@ -11,12 +11,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(User::class, 'user');
+       // $this->authorizeResource(User::class, 'user');
     }
     /**
      * Display a listing of the resource.
@@ -25,6 +27,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
         return view('author.index', [
             'authors' => User::with('rol')->withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
         ]);
@@ -37,7 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
+        $this->authorize('create', User::class);
         return view('author.create', [
             'rols'=> rol::all()
         ]);
@@ -51,7 +54,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request, [
+        $this->authorize('create', User::class);
+        $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp'],
             'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp'],
@@ -66,10 +70,6 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('author.index')->with(['error' => $validator->errors()], 'Validation Error');
-        }
 
         $tiempo=time();
         $request->file('profile_img')->storeAs(
@@ -124,9 +124,14 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $this->authorize('update',$user);
+        return view('author.edit', [
+            'author' => $user,
+            'rols'=> rol::all()
+        ]);
     }
 
     /**
@@ -136,9 +141,69 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $this->authorize('update', $user);
+
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'profile_img'=>['required', 'image','mimes:png,jpg,jpeg,bmp'],
+            'cover_img'=>['required', 'image', 'mimes:png,jpg,jpeg,bmp'],
+            'bio'=>['required', 'string', 'max:255'],
+            'github'=>['string', 'max:70'],
+            'website'=>['string', 'max:100'],
+            'twitter'=>['string', 'max:50'],
+            'slug'=>['required', 'string', 'max:50'],
+            'rol_id'=>['required', 'integer'],
+            'meta_title'=>['required', 'string'],
+            'meta_desc'=>['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:50'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+
+
+        $tiempo=time();
+        $request->file('profile_img')->storeAs(
+            'public/uploads/',
+            $tiempo . trim($request->file('profile_img')->getClientOriginalName())
+        );
+
+        $pathProfileImg = 'storage/uploads/'. $tiempo . trim($request->file('profile_img')->getClientOriginalName());
+
+        $request->file('cover_img')->storeAs(
+            'public/uploads/',
+            $tiempo . trim($request->file('cover_img')->getClientOriginalName())
+        );
+
+        $pathCovImg = "storage/uploads/". $tiempo . trim($request->file('cover_img')->getClientOriginalName());
+
+        $oldImg=\explode('/' ,$user->profile_img)[2];
+        Storage::delete('public/uploads/'.$oldImg);
+        $oldImg=\explode('/' ,$user->cover_img)[2];
+        Storage::delete('public/uploads/'.$oldImg);
+
+        $data=([
+                'name' => $request['name'],
+                'status'=>'ofline',
+                'profile_img'=>$pathProfileImg,
+                'cover_img'=>$pathCovImg,
+                'bio'=>$request['bio'],
+                'github'=>$request['github'],
+                'website'=>$request['website'],
+                'twitter'=>$request['twitter'],
+                'slug'=>$request['slug'],
+                'rol_id'=>$request['rol_id'],
+                'meta_title'=>$request['meta_title'],
+                'meta_desc'=>$request['meta_desc'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                ]);
+
+         $user->update($data);
+
+        return redirect()->route('author.index')->with('success', 'autor actualizado correctamente!');
     }
 
     /**
@@ -147,19 +212,11 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy( $id)
     {
-
-        if (Auth::user()->id == $user->id || $user->rol_id != 1) {
-            return redirect()->route('author.index')->with('error', 'No estas Autorizado');
-        }else{
-            try {
-                $user->delete();
-                return redirect()->route('author.index')->with('success', 'usuario eliminado correctamente!');
-            } catch (Exception $e) {
-                return redirect()->route('author.index')->with('error', $e->getStatusCode());
-            }
-        }
-
+        $user= User::find($id);
+        $this->authorize('delete', $user);
+        $user->delete();
+         return redirect()->route('author.index')->with('success', 'usuario eliminado correctamente!');
     }
 }

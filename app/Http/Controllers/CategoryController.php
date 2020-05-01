@@ -154,7 +154,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::find($id)->delete();
+        $category = Category::find($id);
+        $this->authorize('delete', $category);
+        $category->delete();
 
         return redirect()->route('category.index')->with('success', 'categoria eliminada correctamente!');
     }

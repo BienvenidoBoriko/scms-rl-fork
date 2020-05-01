@@ -26,6 +26,7 @@
                 <th>Avatar</th>
                 <th>Nombre</th>
                 <th>Numero de entradas</th>
+                <th>Editar</th>
                 <th>Borrar</th>
             </tr>
         </thead>
@@ -39,10 +40,13 @@
                     <td> {{ $author->name }} </td>
                     <td>{{ $author->posts_count }}</td>
                     <td>
+                        <a href="{{route('author.edit', $author->id)}}" class="btn btn-sml btn-secondary">Editar</a>
+                    </td>
+                    <td>
                         <form action="{{route('author.destroy', $author->id)}}" method="post">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
+                            <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"> Borrar</button>
                         </form>
                     </td>
                 </tr>

@@ -17,7 +17,7 @@ class RolSeeder extends Seeder
             'created_at'=>'2020/04/25',
         ]);
         DB::table('rols')->insert([
-            'name' => 'autor',
+            'name' => 'author',
             'description'=>'autor del sitio',
             'created_at'=>'2020/04/25',
         ]);
