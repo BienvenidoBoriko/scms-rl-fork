@@ -20,7 +20,8 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
     }
 
     /**
@@ -32,7 +33,8 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
     }
 
     /**
@@ -57,7 +59,21 @@ class PostPolicy
     public function update(User $user, Post $post)
     {
         $rol=rol::find($user->rol_id);
-       return Str::of('admin')->exactly($rol->name);
+       return Str::of('admin')->exactly($rol->name) || $user->id===$post->author_id;
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Post  $post
+     * @return mixed
+     */
+    public function upload(User $user, Post $post)
+    {
+        $rol=rol::find($user->rol_id);
+        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
+
     }
 
     /**

@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/posts/store', 'PostController@store')->name('post.store');
     Route::post('/posts/image/upload', 'PostController@upload')->name('post.image.upload');
     Route::delete('/posts/{id}', 'PostController@destroy')->name('post.destroy');
+    Route::get('/posts/{id}/edit', 'PostController@edit')->name('post.edit');
+    Route::put('/posts/{id}', 'PostController@update')->name('post.update');
 
     Route::get('/authors', 'UserController@index')->name('author.index');
     Route::get('/authors/create', 'UserController@create')->name('author.create');

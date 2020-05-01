@@ -15,8 +15,6 @@
             </div>
             <div class="col col-md-5"><input class="form-control" type="text"></div>
             <div class="col col-md-2"><button class="btn btn-primary" type="button">Buscar</button></div>
-            <div class="col col-md-3"><button class="btn btn-primary ml-5 btn-danger" type="button">Borrar</button>
-            </div>
         </div>
     </form>
     <div class="table-responsive mt-4 mb-4">
@@ -27,6 +25,7 @@
                     <th>Categoria</th>
                     <th>Etiquetas</th>
                     <th>Featured</th>
+                    <th>Editar</th>
                     <th>Borrar</th>
                 </tr>
             </thead>
@@ -42,6 +41,11 @@
                         </td>
                         <td>
                             @if($post->featured==true) si @else no @endif
+                        </td>
+                        <td>
+                            <td>
+                                <a href="{{route('post.edit', $post->id)}}" class="btn btn-sml btn-secondary"> Editar</a>
+                            </td>
                         </td>
                         <td>
                             <form action="{{route('post.destroy', $post->id)}}" method="post">

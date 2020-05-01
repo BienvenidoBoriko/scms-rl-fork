@@ -9,17 +9,15 @@ use App\Tag;
 use App\Meta_tags;
 use App\Category;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Post::class, 'post');
-    }
 
     public function index()
     {
+        $this->authorize('viewAny', Post::class);
         return view('post.index', [
             'posts' => Post::with(['tags', 'category'])->orderBy('created_at', 'desc')->paginate(7)
         ]);
@@ -32,6 +30,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Post::class);
         return view('post.create', ['users'=>User::all(),
         'categories' => Category::all(), 'tags'=> Tag::all()
         ]);
@@ -47,6 +46,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
         try {
             $this->validate($request, [
             'title' => ['required','string','max:200'],
@@ -54,6 +54,7 @@ class PostController extends Controller
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
             'html' => ['required','string'],
+            'plain_text' => ['string','nullable'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
@@ -116,9 +117,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('post.edit', [
+        $this->authorize('update',$post);
+        $post = Post::with('metaTags')->where('id',$id)->first();
+        return view('post.edit', ['users'=>User::all(),
             'post' => $post,
-            'tags' => Tags::all(),
+            'tags' => Tag::all(),
             'categories' => Category::all()
         ]);
     }
@@ -133,12 +136,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::find($id);
+        $this->authorize('update', $post);
         $this->validate($request, [
             'title' => ['required','string','max:200'],
-            'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
+            //'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
-            'plain_text' => ['required','string','nullable'],
+            'plain_text' => ['string','nullable'],
             'html' => ['required','string'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
             'featured' => ['required','boolean'],
@@ -159,7 +164,7 @@ class PostController extends Controller
         $data = [
 
             'title' => $request->input('title'),
-            'status' => $request->input('status'),
+            'status' => 'publiced',
             'published_at' => $request->input('published_at'),
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
@@ -176,7 +181,8 @@ class PostController extends Controller
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
 
-        $post = Post::find($id);
+        $oldImg=\explode('/' ,$post->featured_img)[2];
+        Storage::delete('public/uploads/'.$oldImg);
         $post->update($data);
 
         /* if ($request->has('category')) {
@@ -185,12 +191,13 @@ class PostController extends Controller
              $post->categories()->detach();
          }*/
 
-        return redirect()->route('post.edit', $post->id)->with('success', 'Entrada actualizada correctamente!');
+        return redirect()->route('post.index')->with('success', 'Entrada actualizada correctamente!');
     }
 
 
     public function upload(Request $request)
     {
+        $this->authorize('upload', Post::class);
         $this->validate($request, ['upload' => ['required','image'], ]);
         $tiempo=time();
         $request->file('upload')->storeAs(
@@ -215,7 +222,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
+        $post =Post::find($id);
+        $this->authorize('delete', $post);
+        $post->delete();
 
         return redirect()->route('post.index')->with('success', 'Entrada eliminada correctamente!');
     }
