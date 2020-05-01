@@ -6,7 +6,7 @@
                 </a>
             </li>
             <li class="nav-item active mb-2">
-                <a href="{{ url('/home') }} " class="nav-link"> <i class="fa fa-th-large"></i> <span class="nav-label">Tablero</span></a>
+                <a href="{{ url('/') }} " class="nav-link"> <i class="fa fa-th-large"></i> <span class="nav-label">Tablero</span></a>
             </li>
             <li class="nav-item mb-2">
                 <a href="{{ url('/posts') }}" class="nav-link">

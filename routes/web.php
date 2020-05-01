@@ -28,12 +28,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/authors/store', 'UserController@store')->name('author.store');
     Route::delete("/authors/{id}", 'UserController@destroy')->name('author.destroy');
     Route::get('/authors/{id}/edit', 'UserController@edit')->name('author.edit');
-    Route::put('/authors/{user}', 'UserController@update')->name('author.update');
+    Route::put('/authors/{id}', 'UserController@update')->name('author.update');
 
     Route::get('/tags', 'TagController@index')->name('tag.index');
     Route::get('/tags/create', 'TagController@create')->name('tag.create');
     Route::post('/tags/store', 'TagController@store')->name('tag.store');
     Route::delete('/tags/{id}', 'TagController@destroy')->name('tag.destroy');
+    Route::get('/tags/{id}/edit', 'TagController@edit')->name('tag.edit');
+    Route::put('/tags/{id}', 'TagController@update')->name('tag.update');
 
     Route::get('/categories', 'CategoryController@index')->name('category.index');
     Route::get('/categories/create', 'CategoryController@create')->name('category.create');

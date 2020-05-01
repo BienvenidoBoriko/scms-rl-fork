@@ -20,7 +20,8 @@ class TagPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+       return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
     }
 
     /**
@@ -32,7 +33,8 @@ class TagPolicy
      */
     public function view(User $user, Tag $tag)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+       return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
     }
 
     /**

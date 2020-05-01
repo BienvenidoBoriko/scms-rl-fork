@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class TagController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Tag::class, 'tag');
-    }
 
     public function index()
     {
+        $this->authorize('viewAny', Tag::class);
         return view('tag.index', [
             'tags' => Tag::withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
         ]);
@@ -26,7 +24,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
+        $this->authorize('create', Tag::class);
         return view('tag.create');
     }
 
@@ -39,7 +37,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->authorize('create', Tag::class);
          $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
@@ -81,6 +79,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
+        $this->authorize('update',$tag);
         return view('tag.edit', [
             'tag' => $tag,
         ]);
@@ -96,6 +95,8 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $tag = Tag::find($id);
+        $this->authorize('update', $tag);
         $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
@@ -125,16 +126,11 @@ class TagController extends Controller
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
 
-        $tag = Tag::find($id);
+        $oldImg=\explode('/' ,$tag->featured_img)[2];
+        Storage::delete('public/uploads/'.$oldImg);
         $tag->update($data);
 
-       /* if ($request->has('category')) {
-            $post->categories()->sync($request->input('category'));
-        } else {
-            $post->categories()->detach();
-        }*/
-
-        return redirect()->route('tag.edit', $post->id)->with('success', 'Etiqueta actualizada correctamente!');
+        return redirect()->route('tag.index')->with('success', 'Etiqueta actualizada correctamente!');
     }
 
     /**
@@ -145,8 +141,9 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        Tag::find($id)->delete();
-
+        $tag= Tag::find($id);
+        $this->authorize('delete', $tag);
+        $tag->delete();
         return redirect()->route('tag.index')->with('success', 'Etiqueta eliminada correctamente!');
     }
 }

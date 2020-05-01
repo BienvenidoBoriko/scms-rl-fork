@@ -13,7 +13,6 @@
             </div>
             <div class="col col-md-5"><input class="form-control" type="text"></div>
             <div class="col col-md-2"><button class="btn btn-primary" type="button">Buscar</button></div>
-            <div class="col col-md-3"><button class="btn btn-primary ml-5 btn-danger" type="button">Borrar</button></div>
         </div>
     </form>
     <div class="table-responsive mt-4 mb-4">
@@ -22,6 +21,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Numero de entradas</th>
+                    <th>Editar</th>
                     <th>Borrar</th>
                 </tr>
             </thead>
@@ -30,6 +30,9 @@
                     <tr>
                         <td> {{ $tag->name }} </td>
                         <td> {{ $tag->posts_count }} </td>
+                        <td>
+                            <a href="{{route('tag.edit', $tag->id)}}" class="btn btn-sml btn-secondary"> Editar</a>
+                        </td>
                         <td>
                             <form action="{{route('tag.destroy', $tag->id)}}" method="post">
                                 @method('DELETE')
