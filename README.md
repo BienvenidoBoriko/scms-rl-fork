@@ -30,11 +30,7 @@ cd scms-rl.
 - npm install 
 - npm run dev.
 - php artisan migrate.
-- php artisan db:seed --class=RolSeeder.
-- php artisan db:seed --class=UserSeeder.
-- php artisan db:seed --class=TagSeeder.
-- php artisan db:seed --class=CategorySeeder
-- php artisan db:seed --class=PostSeeder.
+- php artisan db:seed.
 - php artisan serve
 
 ### acceder

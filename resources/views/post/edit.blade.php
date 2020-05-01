@@ -103,9 +103,4 @@
     filebrowserUploadMethod: 'form'
 });
 </script>
-
-@php
-        print_r($errors);
-
-    @endphp
 @endsection
