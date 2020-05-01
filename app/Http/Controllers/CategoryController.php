@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Category::class, 'category');
+        //$this->authorizeResource(Category::class);
     }
 
     public function index()
     {
+        $this->authorize('viewAny', Category::class);
         return view('category.index', [
             'categories' => Category::withCount('posts')->orderBy('created_at', 'desc')->paginate(7)
         ]);
@@ -26,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //return view('post.create', ['categories' => Category::all(), 'tags'=> Tags::all()]);
+        $this->authorize('create', Category::class);
         return view('category.create');
     }
 
@@ -39,6 +42,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
          $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
@@ -84,6 +88,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+        $this->authorize('update',$category);
         return view('category.edit', [
             'category' => $category,
         ]);
@@ -99,6 +104,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $category = Category::find($id);
+        $this->authorize('update', $category);
         $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
@@ -106,9 +113,8 @@ class CategoryController extends Controller
             'slug' => ['required','string','max:30'],
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
-            'visibility'=>['required','boolean']
+            'visibility'=>['required',Rule::in(['true','false'])]
         ]);
-
         $tiempo=time();
         $request->file('featured_img')->storeAs(
             'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
@@ -128,17 +134,16 @@ class CategoryController extends Controller
         /*if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
-
-        $category = Category::find($id);
+        $oldImg=\explode('/' ,$category->featured_img)[2];
+        Storage::delete('public/uploads/'.$oldImg);
         $category->update($data);
-
        /* if ($request->has('category')) {
             $post->categories()->sync($request->input('category'));
         } else {
             $post->categories()->detach();
         }*/
 
-        return redirect()->route('category.edit', $post->id)->with('success', 'categoria actualizada correctamente!');
+        return redirect()->route('category.index')->with('success', 'categoria actualizada correctamente!');
     }
 
     /**

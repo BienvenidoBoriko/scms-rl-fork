@@ -27,6 +27,7 @@
                     <th>Nombre</>
                     <th>Numero de entradas</th>
                     <th>Es Visible</th>
+                    <th>Editar</th>
                     <th>Borrar</th>
                 </tr>
             </thead>
@@ -36,6 +37,11 @@
                         <td>{{ $category->name }} </td>
                         <td>{{ $category->posts_count }}</td>
                         <td> {{ $category->visibility }} </td>
+                        <td>
+
+                            <a href="{{route('category.edit', $category->id)}}" class="btn btn-sml btn-secondary"> Editar</a>
+
+                        </td>
                         <td>
                             <form action="{{route('category.destroy', $category->id)}}" method="post">
                                 @method('DELETE')

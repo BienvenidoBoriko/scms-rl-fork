@@ -21,7 +21,9 @@ class CategoryPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
+
     }
 
     /**
@@ -33,7 +35,9 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category)
     {
-        return true;
+        $rol=rol::find($user->rol_id);
+        return (Str::of('admin')->exactly($rol->name) || Str::of('author')->exactly($rol->name));
+
     }
 
     /**
@@ -57,9 +61,11 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        $rol=rol::find($user->rol_id);
+        //return true;
+         $rol=rol::find($user->rol_id);
        return Str::of('admin')->exactly($rol->name);
     }
+
 
     /**
      * Determine whether the user can delete the model.
@@ -70,8 +76,9 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category)
     {
-        $rol=rol::find($user->rol_id);
-       return Str::of('admin')->exactly($rol->name);
+        return true;
+        /* $rol=rol::find($user->rol_id);
+       return Str::of('admin')->exactly($rol->name); */
     }
 
     /**
