@@ -77,6 +77,8 @@ a.navbar-brand {
     width: 200px;
     background-color: $sidebarBackgroun;
     transition: all 0.5s ease-in-out;
+    min-height: 100vh;
+    position: fixed;
 }
 
 .sidebar ul {
@@ -241,4 +243,14 @@ a.navbar-brand {
     border-radius: 50%;
     margin-right: 10px;
     margin-top: -2px;
+}
+
+//
+section.content-margin {
+    margin-left: 200px;
+}
+
+section.content-margin.content-margin-0 {
+    margin-left: 42px;
+    transition: all 0.5s ease-in-out
 }

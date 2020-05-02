@@ -87,11 +87,11 @@
     </div>
     </nav>--}}
 
-    <main class="">
-       <x-navbar />
-        <section class="d-flex flex-wrap">
-            <x-sidebar />
-            <section class="ml-auto mr-auto pt-3" style="width: calc(100vw - 290px)">
+    <main class="d-flex flex-wrap">
+        <x-sidebar />
+        <section class="w-100 content-margin" >
+            <x-navbar />
+            <section class="mr-3 ml-3 pt-3 " >
                 @yield('content')
             </section>
         </section>

@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'bboriko',
-            'profile_img'=>'storage/uploads/1587893570IMG_20190310_105305.jpg',
-            'cover_img'=>'storage/uploads/1587893570fondo.png',
+            'profile_img'=>'storage/uploads/1588417977IMG_20190310_105305.jpg',
+            'cover_img'=>'storage/uploads/1588417977fondo.png',
             'bio'=>'admin del sitio',
             'status'=>'ofline',
             'github'=>'github.com/ejemplo ',
@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'bboriko2',
-            'profile_img'=>'storage/uploads/1587893570IMG_20190310_105305.jpg',
-            'cover_img'=>'storage/uploads/1587893570fondo.png',
+            'profile_img'=>'storage/uploads/1588418146IMG_20190310_105305.jpg',
+            'cover_img'=>'storage/uploads/1588418146fondo.png',
             'bio'=>'autor del sitio',
             'status'=>'ofline',
             'github'=>'github.com/ejemplo2 ',

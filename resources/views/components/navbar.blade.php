@@ -1,14 +1,15 @@
-<header class="header py-3">
+<header class="header py-3 navbar-margin">
     <nav class="navbar navbar-expand-lg navbar-light pt-0 pb-0 justify-content-between">
-        <div class="">
-            <a class="navbar-brand p-0 mr-4" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
+
             <a href="#" class="button-left">
                 <i class="iconX fa fa-fw fa-bars "></i>
                 <i class="iconX fas fa-times"></i>
             </a>
-        </div>
+            <a class="navbar-brand p-0 mr-4" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+
+
         <div class="flex-row-reverse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown  user-menu">
