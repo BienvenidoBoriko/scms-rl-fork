@@ -4,11 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Tag;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\TagResource;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Tag::class, 'tag');
+    }
     /**
      * Display a listing of the resource.
      *

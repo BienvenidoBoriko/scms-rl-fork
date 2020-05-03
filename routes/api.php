@@ -24,4 +24,5 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::apiResource('/posts', 'API\PostController');
     Route::apiResource('/tags', 'API\TagController');
     Route::apiResource('/categories', 'API\CategoryController');
+    Route::apiResource('/settings', 'API\SettingController');
 });
