@@ -6,37 +6,21 @@ import Home from "./../containers/Home";
 import Tag from "./../containers/Tag";
 import Post from "./../containers/Post";
 import Category from "./../containers/Category";
+import NavBar from "../components/NavBar";
 
 function App() {
   return (
     <div className="App container">
       <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/tag/css">Css</Link>
-            </li>
-            <li>
-              <Link to="/category/programacion">Programacion</Link>
-            </li>
-            <li>
-              <Link to="/post/1">post 1</Link>
-            </li>
-          </ul>
-
-          <hr />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/tag/:name" children={<Tag />} />
-            <Route path="/category/:name" children={<Category />} />
-            <Route path="/post/:id" children={<Post />} />
-          </Switch>
-        </div>
+        <NavBar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/tag/:name" children={<Tag />} />
+          <Route path="/category/:name" children={<Category />} />
+          <Route path="/post/:id" children={<Post />} />
+        </Switch>
       </Router>
     </div>
   );
