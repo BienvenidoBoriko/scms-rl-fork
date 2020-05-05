@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Tag;
@@ -23,7 +23,6 @@ class TagController extends Controller
     {
         $tags = Tag::all();
         return response([ 'tags' => TagResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**
@@ -45,7 +44,7 @@ class TagController extends Controller
             'meta_desc' => ['required','string','max:200'],
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
@@ -78,7 +77,6 @@ class TagController extends Controller
         $tag->update($request->all());
 
         return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**

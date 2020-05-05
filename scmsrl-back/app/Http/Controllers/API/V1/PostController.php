@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Post;
@@ -100,7 +100,6 @@ class PostController extends Controller
         $post->update($request->all());
 
         return response([ 'user' => new PostResource($post), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**

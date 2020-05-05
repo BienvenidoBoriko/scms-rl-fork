@@ -18,11 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::post('/login', 'Api\AuthController@login');
-Route::group(['middleware' => ['auth:api']], function () {
-    Route::apiResource('/users', 'API\UserController');
-    Route::apiResource('/posts', 'API\PostController');
-    Route::apiResource('/tags', 'API\TagController');
-    Route::apiResource('/categories', 'API\CategoryController');
-    Route::apiResource('/settings', 'API\SettingController');
+Route::post('/v1/login', 'Api\V1\AuthController@login');
+Route::group(['middleware' => ['auth:api'],'prefix'=> 'v1'], function () {
+    Route::apiResource('/users', 'API\V1\UserController');
+    Route::apiResource('/posts', 'API\V1\PostController');
+    Route::apiResource('/tags', 'API\V1\TagController');
+    Route::apiResource('/categories', 'API\v1\CategoryController');
+    Route::apiResource('/settings', 'API\v1\SettingController');
 });

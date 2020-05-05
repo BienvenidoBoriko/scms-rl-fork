@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\User;
@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-         $data = $request->all();
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -51,7 +51,7 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
@@ -70,7 +70,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         return response([ 'user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**
@@ -85,7 +84,6 @@ class UserController extends Controller
         $user->update($request->all());
 
         return response([ 'user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**

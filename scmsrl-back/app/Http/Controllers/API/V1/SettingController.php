@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Setting;
@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-
     public function __construct()
     {
         $this->authorizeResource(Setting::class, 'setting');
@@ -33,7 +32,7 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        return response(['message'=>'option not sopported'],200);
+        return response(['message'=>'option not sopported'], 200);
     }
 
     /**
@@ -44,7 +43,7 @@ class SettingController extends Controller
      */
     public function show(Setting $setting)
     {
-        return response(['message'=>'option not sopported'],200);
+        return response(['message'=>'option not sopported'], 200);
     }
 
     /**
@@ -59,7 +58,6 @@ class SettingController extends Controller
         $setting->update($request->all());
 
         return response([ 'setting' => new SettingResource($setting), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**
@@ -70,6 +68,6 @@ class SettingController extends Controller
      */
     public function destroy(Setting $setting)
     {
-        return response(['message'=>'option not sopported'],200);
+        return response(['message'=>'option not sopported'], 200);
     }
 }

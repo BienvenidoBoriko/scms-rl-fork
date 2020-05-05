@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\V1;
 
 use App\Category;
 use App\Http\Resources\CategoryResource;
@@ -23,7 +23,6 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         return response([ 'categories' => CategoryResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
-
     }
 
     /**
@@ -46,7 +45,7 @@ class CategoryController extends Controller
             'visibility'=>['required','string']
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
