@@ -1,18 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import logo from "./../logo.svg";
-import "./../sass/App.scss";
-import Home from "./../containers/Home";
-import Tag from "./../containers/Tag";
-import Post from "./../containers/Post";
-import Category from "./../containers/Category";
-import NavBar from "../components/NavBar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./sass/App.scss";
+import Home from "./views/Home/Home";
+import Tag from "./views/Tag/Tag";
+import Post from "./views//Post/Post";
+import Category from "./views/Category/Category";
 
 function App() {
   return (
     <div className="App container">
       <Router>
-        <NavBar />
         <Switch>
           <Route exact path="/">
             <Home />

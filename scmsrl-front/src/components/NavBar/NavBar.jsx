@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 const navLinks = [
   { url: "/", text: "Home" },
   { url: "/category/programacion", text: "Programacion" },
@@ -15,9 +15,9 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
       <div className="container">
-        <a className="navbar-brand" href={siteTitle.url}>
+        <Link to={siteTitle.url} className="navbar-brand">
           {siteTitle.text}
-        </a>
+        </Link>
         <button
           data-toggle="collapse"
           data-target="#navbarResponsive"
