@@ -5,32 +5,31 @@ const Home = () => {
   const [data, setData] = useState({ posts: "", tags: "", categories: "", settings: "" });
 
   const getData = async () => {
-    let datas = {};
-    datas.posts = await getPosts()
-      .then((res) => res.data)
-      .then((data) => data.posts);
-
-    datas.tags = await getTags()
-      .then((res) => res.data)
-      .then((data) => data.tags);
-
-    datas.categories = await getCategories()
-      .then((res) => res.data)
-      .then((data) => data.categories);
+    let datas = { posts: "", tags: "", categories: "", settings: "" };
 
     datas.settings = await getSettings()
       .then((res) => res.data)
       .then((data) => data.settings);
+    datas.tags = await getTags()
+      .then((res) => res.data)
+      .then((data) => data.tags);
+    datas.categories = await getCategories()
+      .then((res) => res.data)
+      .then((data) => data.categories);
+
+    datas.posts = await getPosts()
+      .then((res) => res.data)
+      .then((data) => data.posts);
+    setData(datas);
     return datas;
   };
 
-  useEffect(async () => {
-    setData(await getData());
+  useEffect(() => {
+    getData();
   }, []);
-
   return (
     <Fragment>
-      <NavBar />
+      <NavBar title={data.settings[0] != undefined ? data.settings[0].value : ""} categories={data.categories} tags={data.tags} />
       <div>estamos en home</div>
     </Fragment>
   );
