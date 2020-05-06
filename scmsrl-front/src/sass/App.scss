@@ -1,7 +1,7 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
 body {
-    background-color: $blue;
+    //background-color: $blue;
 }
 
 @import './../views/Category/category.scss';
@@ -10,4 +10,8 @@ body {
 
 @import './../views/Home/home.scss';
 
-@import './../views/Post/post.scss'
+@import './../views/Post/post.scss';
+
+@import './../components/header/header.scss';
+
+@import './../components/NavBar/navBar.scss'

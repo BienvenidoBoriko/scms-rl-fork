@@ -8,7 +8,7 @@ import Category from "./views/Category/Category";
 
 function App() {
   return (
-    <div className="App container">
+    <div className="App">
       <Router>
         <Switch>
           <Route exact path="/">

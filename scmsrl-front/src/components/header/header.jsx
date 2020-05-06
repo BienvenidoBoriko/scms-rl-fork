@@ -1,9 +1,15 @@
 import React from "react";
-
+import config from "./../../utils/config";
 const Header = ({ title, cover_img, desc }) => {
-  cover_img = "http://192.168.10.10/" + cover_img;
+  cover_img = config.host + cover_img;
   return (
-    <header class="masthead" style="background-image:url({cover_img});">
+    /*  <header class="masthead" style={{ "background-image": "url(" + cover_img + ")" }}> */
+    <header
+      class="masthead"
+      style={{
+        "background-image": "url(./p.jpg)",
+      }}
+    >
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
