@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 const Footer = ({ categories, tags, settings }) => {
@@ -6,7 +6,7 @@ const Footer = ({ categories, tags, settings }) => {
     <div class="footer-dark">
       <footer>
         <div class="container">
-          <div class="row">
+          <div class="row justify-content-center">
             <div class="col-sm-6 col-md-3 item">
               <h3>Categorias</h3>
               <ul>
@@ -31,26 +31,32 @@ const Footer = ({ categories, tags, settings }) => {
                 })}
               </ul>
             </div>
-            <div class="col-md-6 item text">
-              <h3>{settings[0].value}</h3>
-              <p>{settings[1].value}</p>
-            </div>
-            <div class="col item social">
-              <Link to={settings[4].value}>
-                <i class="icon ion-social-facebook"></i>
-              </Link>
-              <Link to={settings[5].value}>
-                <i class="icon ion-social-twitter"></i>
-              </Link>
-              <Link to={settings[6].value}>
-                <i class="icon ion-social-email"></i>
-              </Link>
-              <Link to={settings[7].value}>
-                <i class="icon ion-social-github"></i>
-              </Link>
-            </div>
+            {settings.length !== 0 ? (
+              <Fragment>
+                <div class="col-sm-6 col-md-3 item text">
+                  <h3>{settings[0].value}</h3>
+                  <p>{settings[1].value}</p>
+                </div>
+                <div class="col-md-12 item social">
+                  <Link to={settings[4].value}>
+                    <i class="fab fa-facebook"></i>
+                  </Link>
+                  <Link to={settings[5].value}>
+                    <i class="fab fa-twitter-square"></i>
+                  </Link>
+                  <Link to={settings[6].value}>
+                    <i class="fas fa-envelope-square"></i>
+                  </Link>
+                  <Link to={settings[7].value}>
+                    <i class="fab fa-github-square"></i>
+                  </Link>
+                </div>
+              </Fragment>
+            ) : (
+              ""
+            )}
           </div>
-          <p class="copyright">{`${settings[0].value} © ${new Date().getFullYear()}`}</p>
+          {settings.length !== 0 ? <p class="copyright">{`${settings[0].value} © ${new Date().getFullYear()}`}</p> : ""}
         </div>
       </footer>
     </div>

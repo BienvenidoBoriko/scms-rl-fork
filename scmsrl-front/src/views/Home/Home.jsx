@@ -6,10 +6,10 @@ import CardList from "./../../components/cardList/cardList";
 import Footer from "./../../components/footer/footer";
 
 const Home = () => {
-  const [data, setData] = useState({ posts: "", tags: "", categories: "", settings: "" });
+  const [data, setData] = useState({ posts: [], tags: [], categories: [], settings: [] });
 
   const getData = async () => {
-    let datas = { posts: "", tags: "", categories: "", settings: "" };
+    let datas = { posts: [], tags: [], categories: [], settings: [] };
 
     datas.settings = await getSettings()
       .then((res) => res.data)
@@ -55,7 +55,6 @@ const Home = () => {
       })}
 
       <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
-      <div>estamos en home</div>
     </Fragment>
   );
 };
