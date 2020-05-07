@@ -21,7 +21,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::with('posts')->orderBy('created_at', 'desc')->paginate(7);
+        ;
         return response([ 'tags' => TagResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
     }
 
@@ -62,6 +63,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
+        $tag=Tag::with('posts')->where('id', $tag->id)->get();
         return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
     }
 

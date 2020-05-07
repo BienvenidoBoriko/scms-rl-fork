@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with('posts')->orderBy('created_at', 'desc')->paginate(7);
         return response([ 'categories' => CategoryResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
     }
 
@@ -63,6 +63,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        $category=Category::with('posts')->where('id', $category->id)->get();
+
         return response([ 'category' => new CategoryResource($category), 'message' => 'Retrieved successfully'], 200);
     }
 
