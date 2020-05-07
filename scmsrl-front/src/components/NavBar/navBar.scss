@@ -57,6 +57,7 @@
         transition: background-color .2s;
         -webkit-transform: translateZ(0);
         transform: translateZ(0);
+        backface-visibility: hidden;
         -webkit-backface-visibility: hidden
     }
 

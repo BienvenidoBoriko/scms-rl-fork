@@ -3,7 +3,7 @@ import config from "./../../utils/config";
 
 const Card = ({ img, title, desc, id }) => {
   return (
-    <div class="col-sm-6 col-md-4 item" style="padding-top: 20px;">
+    <div class="col-sm-6 col-md-4 item" style={{ "padding-top": "20px" }}>
       <a href="#">
         <img class="img-fluid" src={config.host + img} />
       </a>
