@@ -9,7 +9,7 @@ const Card = ({ img, title, desc, id }) => {
       </a>
       <h3 class="name">{title}</h3>
       <p class="description">{desc}</p>
-      <a class="action" href={`post/${id}`}>
+      <a class="action" href={`posts/${id}`}>
         <i class="fa fa-arrow-circle-right"></i>
       </a>
     </div>

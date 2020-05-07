@@ -3,6 +3,7 @@ import { getPosts, getCategories, getSettings, getTags } from "./../../utils/pet
 import NavBar from "./../../components/NavBar/NavBar";
 import Header from "./../../components/header/header";
 import CardList from "./../../components/cardList/cardList";
+import Footer from "./../../components/footer/footer";
 
 const Home = () => {
   const [data, setData] = useState({ posts: "", tags: "", categories: "", settings: "" });
@@ -31,9 +32,9 @@ const Home = () => {
     getData();
   }, []);
 
-  const getResentPosts = () => {
+  const get3Posts = (posts) => {
     let rPosts = [];
-    for (let post of data.posts) {
+    for (let post of posts) {
       rPosts.push(post);
       if (rPosts.length === 3) break;
     }
@@ -48,7 +49,12 @@ const Home = () => {
         desc={data.settings[1] != undefined ? data.settings[1].value : ""}
       />
 
-      <CardList posts={getResentPosts()} title="Ultimas Entradas" />
+      <CardList posts={get3Posts(data.posts)} title="Ultimas Entradas" />
+      {data.categories.map((category, index) => {
+        return <CardList posts={get3Posts(category.posts)} title={category.name} />;
+      })}
+
+      <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
       <div>estamos en home</div>
     </Fragment>
   );

@@ -26,12 +26,12 @@ const NavBar = ({ title, categories, tags }) => {
               </NavLink>
             </li>
             <li className="nav-item" role="presentation">
-              <NavLink to={`/category/${categories[0] ? categories[0].slug : ""}`} className="nav-link" activeClassName="active">
+              <NavLink to={`/categories/${categories[0] ? categories[0].id : ""}`} className="nav-link" activeClassName="active">
                 {categories[0] != undefined ? categories[0].name : "hola"}
               </NavLink>
             </li>
             <li className="nav-item" role="presentation">
-              <NavLink to={`/tag/${tags[0] ? tags[0].slug : ""}`} className="nav-link" activeClassName="active">
+              <NavLink to={`/tags/${tags[0] ? tags[0].id : ""}`} className="nav-link" activeClassName="active">
                 {tags[0] != undefined ? tags[0].name : "hola"}
               </NavLink>
             </li>

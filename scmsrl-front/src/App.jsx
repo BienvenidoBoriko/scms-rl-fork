@@ -14,9 +14,9 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/tag/:name" children={<Tag />} />
-          <Route path="/category/:name" children={<Category />} />
-          <Route path="/post/:id" children={<Post />} />
+          <Route path="/tags/:name" children={<Tag />} />
+          <Route path="/categories/:name" children={<Category />} />
+          <Route path="/posts/:id" children={<Post />} />
         </Switch>
       </Router>
     </div>
