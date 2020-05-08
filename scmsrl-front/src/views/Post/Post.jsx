@@ -20,7 +20,6 @@ const Post = (props) => {
     getData();
   }, []);
 
-  console.log(post);
   return (
     <Fragment>
       <PostHeader

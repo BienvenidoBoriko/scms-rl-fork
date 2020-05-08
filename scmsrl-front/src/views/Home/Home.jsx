@@ -15,7 +15,7 @@ const Home = ({ settings, posts, categories, tags }) => {
     <Fragment>
       <Header
         title={settings[0] != undefined ? settings[0].value : ""}
-        cover_img={settings[2] != undefined ? settings[2].value : ""}
+        cover_img={settings[3] != undefined ? settings[3].value : ""}
         desc={settings[1] != undefined ? settings[1].value : ""}
       />
 

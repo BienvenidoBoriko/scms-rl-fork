@@ -3,13 +3,7 @@ import config from "./../../utils/config";
 const Header = ({ title, cover_img, desc }) => {
   cover_img = config.host + cover_img;
   return (
-    /*  <header class="masthead" style={{ "background-image": "url(" + cover_img + ")" }}> */
-    <header
-      class="masthead"
-      style={{
-        "background-image": "url(./p.jpg)",
-      }}
-    >
+    <header class="masthead" style={{ "background-image": "url(" + cover_img + ")" }}>
       <div class="overlay"></div>
       <div class="container">
         <div class="row">

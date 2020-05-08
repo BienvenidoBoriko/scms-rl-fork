@@ -44,7 +44,7 @@ function App() {
           <Route exact path="/" render={(props) => <Home settings={data.settings} tags={data.tags} posts={data.posts} categories={data.categories} />} />
 
           <Route path="/tags/:name" component={Tag} />
-          <Route path="/categories/:name" component={Category} />
+          <Route path="/categories/:id" component={Category} />
           <Route path="/posts/:id" component={Post} />
         </Switch>
         <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
