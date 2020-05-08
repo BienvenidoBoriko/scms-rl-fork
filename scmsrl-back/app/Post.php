@@ -13,7 +13,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag','post_tags')->withTimeStamps();
+        return $this->belongsToMany('App\Tag', 'post_tags')->withTimeStamps();
     }
 
     public function metaTags()
@@ -24,5 +24,10 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo('App\Category');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

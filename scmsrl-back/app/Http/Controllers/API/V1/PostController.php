@@ -84,7 +84,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post=Post::with(['tags','category','metaTags'])->where('id', $post->id)->get();
+        $post=Post::with(['tags','category','metaTags','user'])->where('id', $post->id)->get();
         return response([ 'post' => new PostResource($post), 'message' => 'Retrieved successfully'], 200);
     }
 
