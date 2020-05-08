@@ -1,5 +1,6 @@
 import React from "react";
 import config from "./../../utils/config";
+import { Link } from "react-router-dom";
 
 const Card = ({ img, title, desc, id }) => {
   return (
@@ -9,9 +10,9 @@ const Card = ({ img, title, desc, id }) => {
       </a>
       <h3 class="name">{title}</h3>
       <p class="description">{desc}</p>
-      <a class="action" href={`posts/${id}`}>
+      <Link to={`posts/${id}`} className="action">
         <i class="fa fa-arrow-circle-right"></i>
-      </a>
+      </Link>
     </div>
   );
 };
