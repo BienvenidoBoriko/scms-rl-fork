@@ -25,11 +25,7 @@ const Post = (props) => {
 
   return (() => {
     if (loading) {
-      return (
-        <div className="d-flex justify-content-center align-items-center">
-          <Loading width="75" height="75" />
-        </div>
-      );
+      return <Loading width="75" height="75" />;
     } else {
       return (
         <Fragment>

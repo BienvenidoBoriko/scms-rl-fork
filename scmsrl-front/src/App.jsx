@@ -40,11 +40,7 @@ function App() {
   }, []);
   return (() => {
     if (loading) {
-      return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
-          <Loading width="75" height="75" />
-        </div>
-      );
+      return <Loading width="75" height="75" />;
     } else {
       return (
         <div className="App">

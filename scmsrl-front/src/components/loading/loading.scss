@@ -1,6 +1,11 @@
 $offset: 187;
 $duration: 1.4s;
 
+.loading {
+    background-color: darkcyan;
+    height: 75vh;
+}
+
 .spinner {
     animation: rotator $duration linear infinite;
 }
