@@ -8,9 +8,11 @@ import Post from "./views//Post/Post";
 import Category from "./views/Category/Category";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/footer/footer";
+import Loading from "./components/loading/loading";
 
 function App() {
-  const [data, setData] = useState({ posts: [], tags: [], categories: [], settings: [] });
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const getData = async () => {
     let datas = { posts: [], tags: [], categories: [], settings: [] };
@@ -29,28 +31,39 @@ function App() {
       .then((res) => res.data)
       .then((data) => data.posts);
     setData(datas);
+    setLoading(false);
     return datas;
   };
 
   useEffect(() => {
     getData();
   }, []);
-  return (
-    <div className="App">
-      <Router>
-        <NavBar title={data.settings[0] != undefined ? data.settings[0].value : ""} categories={data.categories} tags={data.tags} />
+  return (() => {
+    if (loading) {
+      return (
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <Loading width="75" height="75" />
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
+          <Router>
+            <NavBar title={data.settings[0].value} categories={data.categories} tags={data.tags} />
 
-        <Switch>
-          <Route exact path="/" render={(props) => <Home settings={data.settings} tags={data.tags} posts={data.posts} categories={data.categories} />} />
+            <Switch>
+              <Route exact path="/" render={(props) => <Home settings={data.settings} tags={data.tags} posts={data.posts} categories={data.categories} />} />
 
-          <Route path="/tags/:id" component={Tag} />
-          <Route path="/categories/:id" component={Category} />
-          <Route path="/posts/:id" component={Post} />
-        </Switch>
-        <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
-      </Router>
-    </div>
-  );
+              <Route path="/tags/:id" component={Tag} />
+              <Route path="/categories/:id" component={Category} />
+              <Route path="/posts/:id" component={Post} />
+            </Switch>
+            <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
+          </Router>
+        </div>
+      );
+    }
+  })();
 }
 
 export default App;

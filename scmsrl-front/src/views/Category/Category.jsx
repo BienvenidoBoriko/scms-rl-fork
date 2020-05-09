@@ -3,17 +3,19 @@ import Header from "./../../components/header/header";
 import { getCategory } from "./../../utils/peticiones";
 import CardList from "./../../components/cardList/cardList";
 import { useParams } from "react-router-dom";
+import Loading from "./../../components/loading/loading";
 
 const Category = (props) => {
   let { id } = useParams();
   const [category, setCategory] = useState({});
-
+  const [loading, setLoading] = useState(true);
   const getData = async () => {
     let category = {};
     category = await getCategory(id)
       .then((res) => res.data)
       .then((data) => data.category[0]);
     setCategory(category);
+    setLoading(false);
     return category;
   };
 
@@ -28,28 +30,32 @@ const Category = (props) => {
     }
     return n;
   };
-  return (
-    <Fragment>
-      <Header
-        title={category.name != undefined ? category.name : ""}
-        cover_img={category.featured_img != undefined ? category.featured_img : ""}
-        desc={category.description != undefined ? category.description : ""}
-      />
+  return (() => {
+    if (loading) {
+      return (
+        <div className="d-flex justify-content-center align-items-center">
+          <Loading width="75" height="75" />
+        </div>
+      );
+    } else {
+      return (
+        <Fragment>
+          <Header title={category.name} cover_img={category.featured_img} desc={category.description} />
 
-      {(() => {
-        if (category.posts !== undefined) {
-          const postsChunked = array_chunk(category.posts, 3);
-          return (
-            <Fragment>
-              {postsChunked.map((post, index) => {
-                return <CardList key={index} posts={post} title={`Post en la categoria ${category.name}`} />;
-              })}
-            </Fragment>
-          );
-        }
-      })()}
-    </Fragment>
-  );
+          {(() => {
+            const postsChunked = array_chunk(category.posts, 3);
+            return (
+              <Fragment>
+                {postsChunked.map((post, index) => {
+                  return <CardList key={index} posts={post} title={`Post en la categoria ${category.name}`} />;
+                })}
+              </Fragment>
+            );
+          })()}
+        </Fragment>
+      );
+    }
+  })();
 };
 
 export default Category;
