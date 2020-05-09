@@ -37,7 +37,7 @@ class SettingSeeder extends Seeder
 
         DB::table('settings')->insert([
             'name' => 'cover_img',
-            'value'=>'storage/uploads/header-img/header-img.jpg',
+            'value'=>'storage/uploads/header-img/header-img.jpeg',
             'type'=>'page',
             'created_at'=>'2020/04/25',
             'updated_at'=>'2020/04/25',
