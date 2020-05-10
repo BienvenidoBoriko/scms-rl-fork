@@ -92,6 +92,7 @@
         <section class="w-100 content-margin" >
             <x-navbar />
             <x-breadcrumbs/>
+            <x-error-message/>
             <section class="mr-3 ml-3 pt-3 " >
                 @yield('content')
             </section>
