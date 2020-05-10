@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPost } from "./../../utils/peticiones";
 import PostHeader from "./../../components/post-header/post-header";
 import PostContent from "./../../components/postContent/postContent";
@@ -29,7 +29,7 @@ const Post = (props) => {
     } else {
       return (
         <Fragment>
-          <PostHeader title={post.title} author={post.user.name} published_at={post.published_at} img={post.cover_img} />
+          <PostHeader title={post.title} author={post.user.name} published_at={post.published_at} img={post.featured_img} />
           <PostContent content={post.html} />
         </Fragment>
       );

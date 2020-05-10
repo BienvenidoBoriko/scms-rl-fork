@@ -4,10 +4,12 @@
     }
 
     & .item {
-        padding-top: 50px;
         min-height: 425px;
         text-align: center;
-        padding: 30px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 4px;
+        margin-top: 20px;
         border-radius: 8px;
         box-shadow: 0 0 8px rgba(0, 0, 0, .1);
 

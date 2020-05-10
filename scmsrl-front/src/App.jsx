@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { getPosts, getCategories, getSettings, getTags } from "./utils/peticiones";
 import "./sass/App.scss";
 import Home from "./views/Home/Home";

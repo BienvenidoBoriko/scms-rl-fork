@@ -1,8 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import * as moment from "moment";
 import "moment/locale/es";
+import config from "./../../utils/config";
 
 const PostHeader = ({ title, author, published_at, img }) => {
+  img = config.host + img;
   return (
     <header class="masthead" style={{ "background-image": `url(${img})` }}>
       <div class="overlay"></div>

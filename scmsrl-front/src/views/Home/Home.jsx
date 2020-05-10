@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import Header from "./../../components/header/header";
 import CardList from "./../../components/cardList/cardList";
 
