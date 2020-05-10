@@ -10,25 +10,25 @@
             <div class="form-row">
                 <div class="col">
                     <label for="titulo">Titulo<br></label><input name="title" class="form-control" type="text"
-                        id="titulo" required="required">
+                       value="{{old('title')}}" id="titulo" required="required">
                 </div>
 
-                <div class="col"><label for="titulo">slug<br></label><input name="slug" class="form-control"
-                        type="text"></div>
+                <div class="col"><label for="slug">slug<br></label><input id="slug" name="slug" class="form-control"
+                      value="{{old('slug')}}"   type="text"></div>
             </div>
         </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="mDesc">Meta Descripcion<br></label><textarea name="meta_desc"
-                        class="form-control" id="mDesc"></textarea></div>
-                <div class="col"><label for="pClaves">Meta Titulo<br></label><textarea name="meta_title"
-                        class="form-control" id="pClaves"></textarea></div>
+                <div class="col"><label for="meta_desc">Meta Descripcion<br></label><textarea name="meta_desc"
+                        class="form-control" id="meta_desc">{{old('meta_desc')}}</textarea></div>
+                <div class="col"><label for="meta_title">Meta Titulo<br></label><textarea name="meta_title"
+                        class="form-control" id="meta_title">{{old('meta_title')}}</textarea></div>
                 <div class="col"><label for="dCorta">Descripcion Corta<br></label><textarea name="custom_except"
-                            class="form-control" id="dCorta"></textarea></div>
+                            class="form-control" id="dCorta">{{old('custom_except')}}</textarea></div>
             </div>
         </div>
         <div class="form-group"><label for="contenido">Contenido<br></label><textarea name="html" class="form-control"
-                id="contenido" placeholder="esto sera un editor integrado ckeditor"></textarea></div>
+                id="contenido" >{{old('html')}} </textarea></div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col"><label for="categoria">Categoria<br></label><select name="category_id"
@@ -66,8 +66,8 @@
         </div>
         <div class="form-group">
                 <div class="custom-control custom-radio custom-control-inline ">
-                    <input name="featured" value="1" class="custom-control-input" type="radio"
-                        id="destacado"><label class="custom-control-label" for="destacado">Destacado</label>
+                    <input name="featured" class="custom-control-input" type="radio"
+                     value="{{old('featured','1')}} " id="destacado"><label class="custom-control-label" for="destacado">Destacado</label>
                 </div>
         </div>
         <div class="form-group">
