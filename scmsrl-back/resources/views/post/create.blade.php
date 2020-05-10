@@ -51,10 +51,10 @@
                         @foreach($tags as $tag)
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 @if( $loop->first)
-                                    <input class="custom-control-input" type="checkbox" id="{{ $tag->name }}"
+                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox" id="{{ $tag->name }}"
                                         checked="checked" name="tags[]" value="{{ $tag->id }}">
                                 @else
-                                    <input class="custom-control-input" type="checkbox" name="tags[]"
+                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox" name="tags[]"
                                         value="{{ $tag->id }}">
                                 @endif
                                 <label class="custom-control-label" for="{{ $tag->name }}">{{ $tag->name }}</label>
