@@ -50,8 +50,8 @@ function App() {
             <Switch>
               <Route exact path="/" render={(props) => <Home settings={data.settings} tags={data.tags} posts={data.posts} categories={data.categories} />} />
 
-              <Route path="/tags/:id" component={Tag} />
-              <Route path="/categories/:id" component={Category} />
+              <Route path="/tags/:id" render={(props) => <Tag tags={data.tags} />} />
+              <Route path="/categories/:id" render={(props) => <Category categories={data.categories} />} />
               <Route path="/posts/:id" component={Post} />
             </Switch>
             <Footer categories={data.categories} tags={data.tags} settings={data.settings} />
