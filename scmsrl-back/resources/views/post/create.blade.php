@@ -27,8 +27,8 @@
                             class="form-control" id="dCorta">{{old('custom_except')}}</textarea></div>
             </div>
         </div>
-        <div class="form-group"><label for="contenido">Contenido<br></label><textarea name="html" class="form-control"
-                id="contenido" >{{old('html')}} </textarea></div>
+        <div class="form-group"><label for="html">Contenido<br></label><textarea name="html" class="form-control"
+                id="html" >{{old('html')}} </textarea></div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col"><label for="categoria">Categoria<br></label><select name="category_id"
@@ -67,13 +67,13 @@
         <div class="form-group">
                 <div class="custom-control custom-radio custom-control-inline ">
                     <input name="featured" class="custom-control-input" type="radio"
-                     value="{{old('featured','1')}} " id="destacado"><label class="custom-control-label" for="destacado">Destacado</label>
+                     value="{{old('featured','1')}} " id="featured"><label class="custom-control-label" for="featured">Destacado</label>
                 </div>
         </div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col">
-                    <label for="autor">Autor<br></label><select name="author_id" class="form-control" id="autor">
+                    <label for="autor">Autor<br></label><select name="author_id" class="custom-select" id="autor">
                         <optgroup label="posibles autores">
                             @foreach($users as $user)
                                 @if( $user->id === Auth::user()->id)
@@ -87,7 +87,7 @@
                 </div>
 
                 <div class="col">
-                    <label for="mDesc">Imagen de cabecera<br></label><input name="featured_img" type="file">
+                    <label class="custom-file-label" for="featured_img">Imagen de cabecera<br></label><input class="custom-file-input" id="featured_img" name="featured_img" type="file">
                 </div>
 
             </div>
@@ -102,7 +102,5 @@
     filebrowserUploadMethod: 'form'
 });
 </script>
-@php
-        print_r($errors)
-    @endphp
+
 @endsection

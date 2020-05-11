@@ -49,8 +49,8 @@
         </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="profile_img">Imagen de usuario<br></label><input id="profile_img" name="profile_img" type="file"></div>
-                <div class="col"><label for="cover_img">Imagen de cabecera<br></label><input id="cover_img" name="cover_img" type="file"></div>
+                <div class="col"><label class="custom-file-label" for="profile_img">Imagen de usuario</label><input class="custom-file-input" id="profile_img" name="profile_img" type="file"></div>
+                <div class="col"><label class="custom-file-label" for="cover_img">Imagen de cabecera</label><input class="custom-file-input" id="cover_img" name="cover_img" type="file"></div>
             </div>
         </div><button class="btn btn-primary mr-5" type="submit">Guardar</button><button
             class="btn btn-primary ml-3 btn-secondary" type="button">Volver</button>

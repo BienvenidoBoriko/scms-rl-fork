@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['tags','category','metaTags'])->orderBy('created_at', 'desc')->paginate(7);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(20);
         return response([ 'posts' => PostResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
     }
 

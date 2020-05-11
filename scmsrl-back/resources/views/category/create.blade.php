@@ -9,23 +9,23 @@
         <div class="form-group">
             <div class="form-row">
                 <div class="col"><label for="titulo">nombre<br></label><input name="name" class="form-control" type="text"
-                        id="titulo" required="required"></div>
-                <div class="col"><label for="titulo">slug<br></label><input name="slug" class="form-control" type="text"></div>
+                value="{{old('name')}}" id="name" required="required"></div>
+                <div class="col"><label for="slug">slug<br></label><input id="slug" value="{{old('slug')}}" name="slug" class="form-control" type="text"></div>
             </div>
         </div>
-        <div class="form-group"><label for="contenido">descripcion<br></label><textarea class="form-control"
-                id="contenido" name="description" placeholder="esto sera un editor integrado ckeditor"></textarea></div>
+        <div class="form-group"><label for="description">descripcion<br></label><textarea class="form-control"
+        id="description" name="description">{{old('description')}}</textarea></div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="mDesc">Meta Descripcion<br></label><textarea name="meta_desc" class="form-control"
-                        id="mDesc"></textarea></div>
-                <div class="col"><label for="pClaves">Meta Titulo<br></label><textarea name="meta_title" class="form-control"
-                        id="pClaves"></textarea></div>
+                <div class="col"><label for="meta_desc">Meta Descripcion<br></label><textarea name="meta_desc" class="form-control"
+                id="meta_desc">{{old('meta_desc')}}</textarea></div>
+                <div class="col"><label for="meta_title">Meta Titulo<br></label><textarea name="meta_title" class="form-control"
+                id="meta_title">{{old('meta_title')}}</textarea></div>
             </div>
         </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="mDesc">Imagen de cabecera<br></label><input name="featured_img" type="file"></div>
+                <div class="col"><label class="custom-file-label" for="featured_img">Imagen de cabecera<br></label><input class="custom-file-input" id="featured_img" name="featured_img" type="file"></div>
             </div>
         </div>
         <div class="form-group">

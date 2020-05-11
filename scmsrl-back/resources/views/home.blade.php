@@ -10,7 +10,7 @@
     <div class="card-body row">
         <div class="col-md-3">
             <div class="well dash-box">
-                <h2><i class="far fa-file"></i></span>{{ $numPost }} </h2>
+                <h2><i class="far fa-file"></i>{{ $numPost }} </h2>
                 <h4>Entradas</h4>
             </div>
         </div>
@@ -22,13 +22,13 @@
         </div>
         <div class="col-md-3">
             <div class="well dash-box">
-                <h2><i class="fas fa-tags"></i></span>{{ $numTags }}</h2>
+                <h2><i class="fas fa-tags"></i>{{ $numTags }}</h2>
                 <h4>Etiquetas</h4>
             </div>
         </div>
         <div class="col-md-3">
             <div class="well dash-box">
-                <h2><i class="fas fa-clone"></i></span>{{ $numCategories }}</h2>
+                <h2><i class="fas fa-clone"></i>{{ $numCategories }}</h2>
                 <h4>Categorias</h4>
             </div>
         </div>

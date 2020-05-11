@@ -58,8 +58,4 @@
     {{ $authors->links() }}
 </nav>
 </section>
-
- {{ session('error')}}
- {{ session()->get('success') }}
- {{ session()->get('error') }}
 @endsection

@@ -18,7 +18,11 @@
                 <div class="col"><label for="titulo">idioma del sitio<br></label><input value="
                     {{ $lang->value }}" name="lang" class="form-control" type="text" id="titulo" required="required">
                 </div>
-                <div class="col"><label for="cover_img">Imagen de cabecera<br></label><input name="cover_img" id="cover_img" type="file">
+                <div class="col mt-4">
+                     <div class="custom-file">
+                         <input class="custom-file-input" name="cover_img" id="cover_img" type="file">
+                         <label class="custom-file-label" for="cover_img">Imagen de cabecera</label>
+                     </div>
                 </div>
             </div>
         </div>
@@ -43,7 +47,4 @@
     </form>
 </section>
 
-@php
-    print_r( $errors)
-@endphp
 @endsection
