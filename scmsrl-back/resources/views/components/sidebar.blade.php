@@ -1,7 +1,7 @@
 <aside class="vh-100 sidebar left pt-3">
         <ul class="list-sidebar bg-defoult">
             <li class="nav- mb-2 pt-2 pb-2">
-                <a href="#" class="nav-link h4">
+                <a href="{{ config('settings.host-front').':'.config('settings.port-front') }}" class="nav-link h4">
                     <i class="fas fa-blog"></i> <span class="nav-label"> Visitar Sitio </span>
                 </a>
             </li>

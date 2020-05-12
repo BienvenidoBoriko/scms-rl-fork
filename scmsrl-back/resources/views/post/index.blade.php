@@ -30,8 +30,8 @@
             <tbody>
                 @foreach($posts as $post)
                     <tr>
-                        <td> {{ Str::limit( $post->title,50) }} </td>
-                        <td> {{ $post->category->name }} </td>
+                        <td><a href="{{ config('settings.host-front').':'.config('settings.port-front').'/posts/'.$post->id }}">  {{ Str::limit( $post->title,50) }} </a> </td>
+                        <td> {{ $post->category->name }}</td>
                         <td>
                             @foreach($post->tags as $tag)
                                 <span class="badge badge-secondary">{{ $tag->name }}</span>

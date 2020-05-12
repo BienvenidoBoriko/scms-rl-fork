@@ -28,7 +28,7 @@
             <tbody>
                 @foreach($tags as $tag)
                     <tr>
-                        <td> {{ $tag->name }} </td>
+                        <td> <a href="{{ config('settings.host-front').':'.config('settings.port-front').'/tags/'.$tag->id }}"> {{ $tag->name }}</a> </td>
                         <td> {{ $tag->posts_count }} </td>
                         <td>
                             <a href="{{route('tag.edit', $tag->id)}}" class="btn btn-sml btn-secondary"> Editar</a>

@@ -33,7 +33,7 @@
             <tbody>
                 @foreach($categories as $category)
                     <tr>
-                        <td>{{ $category->name }} </td>
+                        <td><a href="{{ config('settings.host-front').':'.config('settings.port-front').'/categories/'.$category->id }}"> {{ $category->name }} </a></td>
                         <td>{{ $category->posts_count }}</td>
                         <td> {{ $category->visibility }} </td>
                         <td>
