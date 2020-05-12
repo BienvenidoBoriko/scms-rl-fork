@@ -97,7 +97,7 @@
     </form>
 </section>
 <script>
-    CKEDITOR.replace('contenido', {
+    CKEDITOR.replace('html', {
     filebrowserUploadUrl: "{{route('post.image.upload', ['_token' => csrf_token() ])}}",
     filebrowserUploadMethod: 'form'
 });
