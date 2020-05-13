@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use DB;
@@ -11,10 +12,10 @@ use App\Category;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
-
     public function index()
     {
         $this->authorize('viewAny', Post::class);
@@ -65,11 +66,12 @@ class PostController extends Controller
             'category_id' => ['required','string','nullable']
         ]);
 
-        $tiempo=time();
-        $request->file('featured_img')->storeAs(
-            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
-        );
-        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+            $tiempo=time();
+            $request->file('featured_img')->storeAs(
+                'public/uploads/',
+                $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            );
+            $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
             $data = [
 
@@ -117,8 +119,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        $this->authorize('update',$post);
-        $post = Post::with('metaTags')->where('id',$id)->first();
+        $this->authorize('update', $post);
+        $post = Post::with('metaTags')->where('id', $id)->first();
         return view('post.edit', ['users'=>User::all(),
             'post' => $post,
             'tags' => Tag::all(),
@@ -157,7 +159,8 @@ class PostController extends Controller
 
         $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            'public/uploads/',
+            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
         $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
@@ -181,7 +184,7 @@ class PostController extends Controller
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
 
-        $oldImg=\explode('/' ,$post->featured_img)[2];
+        $oldImg=\explode('/', $post->featured_img)[2];
         Storage::delete('public/uploads/'.$oldImg);
         $post->update($data);
 
@@ -194,6 +197,28 @@ class PostController extends Controller
         return redirect()->route('post.index')->with('success', 'Entrada actualizada correctamente!');
     }
 
+    public function filterBy(Request $request)
+    {
+        $this->authorize('viewAny', Post::class);
+        $this->validate($request, [
+            'filterParameter' => ['required','string','max:20', Rule::in(['category','tag'])],
+            'name' => ['required','string','max:200'],
+        ]);
+
+        if (Str::of($request->filterParameter)->exactly('tag')) {
+            $posts = Post::whereHas('tags', function ($q) use ($request) {
+                $q->where('name', '=', $request->name);
+            })->orderBy('created_at', 'desc')->paginate(7);
+        } elseif (Str::of($request->filterParameter)->exactly('category')) {
+            $posts = Post::whereHas('category', function ($q) use ($request) {
+                $q->where('name', '=', $request->name);
+            })->orderBy('created_at', 'desc')->paginate(7);
+        }
+
+        return view('post.index', [
+            'posts' => $posts
+        ]);
+    }
 
     public function upload(Request $request)
     {
@@ -201,7 +226,8 @@ class PostController extends Controller
         $this->validate($request, ['upload' => ['required','image'], ]);
         $tiempo=time();
         $request->file('upload')->storeAs(
-            'public/uploads/', $tiempo .  \trim($request->file('upload')->getClientOriginalName())
+            'public/uploads/',
+            $tiempo .  \trim($request->file('upload')->getClientOriginalName())
         );
         $path = 'storage/uploads/'. $tiempo .\trim($request->file('upload')->getClientOriginalName());
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');

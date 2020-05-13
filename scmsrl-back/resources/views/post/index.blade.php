@@ -3,16 +3,19 @@
 @section('content')
 <section>
     <a class="btn btn-secondary" href="{{ route('post.create') }}">Crear entrada</a>
-    <form class="mt-4 mb-2">
+    <form class="mt-4 mb-2" action="{{ route('post.filter') }}" method="POST"
+        enctype="multipart/form-data">
+        @csrf
         <div class="form-row">
             <div class="col col-md-2 col-lg-1">
-                <label class="mr-sm-2 sr-only" for="filtrar">Preference</label>
-                <select class="custom-select mr-sm-2" id="filtrar">
-                    <option selected>nombre</option>
+                <label class="mr-sm-2 sr-only" for="filtrar">filtrar</label>
+                <select class="custom-select mr-sm-2" name="filterParameter" id="filtrar">
+                    <option selected="selected" value="category">Categoria</option>
+                    <option value="tag">Etiqueta</option>
                 </select>
             </div>
-            <div class="col col-md-5"><input class="form-control" type="text"></div>
-            <div class="col col-md-2"><button class="btn btn-primary" type="button">Buscar</button></div>
+            <div class="col col-md-5"><input class="form-control" value="{{old('name')}}" name='name' type="text"></div>
+            <div class="col col-md-2"><button class="btn btn-primary" type="submit">Filtrar</button></div>
         </div>
     </form>
     <div class="table-responsive mt-4 mb-4">
