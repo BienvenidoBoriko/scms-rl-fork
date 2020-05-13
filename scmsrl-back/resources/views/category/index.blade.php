@@ -4,19 +4,20 @@
 
 <section>
     <a class="btn btn-secondary" href="{{ route('category.create') }}">crear categoria</a>
-    <form class="mt-4 mb-2">
+    <form class="mt-4 mb-2" action="{{ route('category.filter') }}" method="POST"
+        enctype="multipart/form-data">
+        @csrf
         <div class="form-row">
+
             <div class="col col-md-2">
-                <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false" type="button">Nombre</button>
-                    <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First
-                            Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a
-                            class="dropdown-item" role="presentation" href="#">Third Item</a></div>
-                </div>
+                <label class="mr-sm-2 sr-only" for="filtrar">filtrar</label>
+                <select class="custom-select mr-sm-2" name="filterParameter" id="filtrar">
+                    <option selected="selected" value="name">Nombre</option>
+                </select>
             </div>
-            <div class="col col-md-5"><input class="form-control" type="text"></div>
-            <div class="col col-md-2"><button class="btn btn-primary" type="button">Buscar</button></div>
-            </div>
+            <div class="col col-md-5"><input value="{{ old('name') }}" name='name'
+                    class="form-control" type="text"></div>
+            <div class="col col-md-2"><button class="btn btn-primary" type="submit">Buscar</button></div>
         </div>
     </form>
     <div class="table-responsive mt-4 mb-4">
@@ -33,19 +34,25 @@
             <tbody>
                 @foreach($categories as $category)
                     <tr>
-                        <td><a href="{{ config('settings.host-front').':'.config('settings.port-front').'/categories/'.$category->id }}"> {{ $category->name }} </a></td>
+                        <td><a
+                                href="{{ config('settings.host-front').':'.config('settings.port-front').'/categories/'.$category->id }}">
+                                {{ $category->name }} </a></td>
                         <td>{{ $category->posts_count }}</td>
                         <td> {{ $category->visibility }} </td>
                         <td>
 
-                            <a href="{{route('category.edit', $category->id)}}" class="btn btn-sml btn-secondary"> Editar</a>
+                            <a href="{{ route('category.edit', $category->id) }}"
+                                class="btn btn-sml btn-secondary"> Editar</a>
 
                         </td>
                         <td>
-                            <form action="{{route('category.destroy', $category->id)}}" method="post">
+                            <form action="{{ route('category.destroy', $category->id) }}"
+                                method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="btn btn-sml btn-danger" onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i class="fa fa-timex"></i> Borrar</button>
+                                <button type="submit" class="btn btn-sml btn-danger"
+                                    onClick="return confirm('Estas seguro de querrer eliminarlo?')"><i
+                                        class="fa fa-timex"></i> Borrar</button>
                             </form>
 
                         </td>

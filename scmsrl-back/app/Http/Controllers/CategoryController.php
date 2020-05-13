@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -43,7 +45,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Category::class);
-         $this->validate($request, [
+        $this->validate($request, [
             'name' => ['required','string','max:30'],
             'description' => ['required','string','max:250'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
@@ -55,7 +57,8 @@ class CategoryController extends Controller
 
         $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            'public/uploads/',
+            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
         $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
 
@@ -72,9 +75,9 @@ class CategoryController extends Controller
 
         $post = Category::create($data);
 
-     /*   if ($request->has('category')) {
-            $post->categories()->sync($request->input('category'));
-        }
+        /*   if ($request->has('category')) {
+               $post->categories()->sync($request->input('category'));
+           }
     */
         return redirect()->route('category.index')->with('success', 'categoria creada correctamente!');
     }
@@ -88,7 +91,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        $this->authorize('update',$category);
+        $this->authorize('update', $category);
         return view('category.edit', [
             'category' => $category,
         ]);
@@ -117,7 +120,8 @@ class CategoryController extends Controller
         ]);
         $tiempo=time();
         $request->file('featured_img')->storeAs(
-            'public/uploads/', $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            'public/uploads/',
+            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
         );
         $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
         $data = [
@@ -134,16 +138,34 @@ class CategoryController extends Controller
         /*if ($request->hasFile('cover_image')) {
             $data['cover_image'] = $this->uploadOne($request->file('cover_image'));
         }*/
-        $oldImg=\explode('/' ,$category->featured_img)[2];
+        $oldImg=\explode('/', $category->featured_img)[2];
         Storage::delete('public/uploads/'.$oldImg);
         $category->update($data);
-       /* if ($request->has('category')) {
-            $post->categories()->sync($request->input('category'));
-        } else {
-            $post->categories()->detach();
-        }*/
+        /* if ($request->has('category')) {
+             $post->categories()->sync($request->input('category'));
+         } else {
+             $post->categories()->detach();
+         }*/
 
         return redirect()->route('category.index')->with('success', 'categoria actualizada correctamente!');
+    }
+
+    public function filterBy(Request $request)
+    {
+        $this->authorize('viewAny', Category::class);
+
+        $this->validate($request, [
+            'filterParameter' => ['required','string','max:20', Rule::in(['name'])],
+            'name' => ['required','string','max:200'],
+        ]);
+
+        if (Str::of($request->filterParameter)->exactly('name')) {
+            $categories = Category::where('name', '=', $request->name)->orderBy('created_at', 'desc')->paginate(7);
+        }
+
+        return view('category.index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
