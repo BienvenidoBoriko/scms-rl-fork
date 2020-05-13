@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/authors', 'UserController@index')->name('author.index');
     Route::get('/authors/create', 'UserController@create')->name('author.create');
     Route::post('/authors/store', 'UserController@store')->name('author.store');
+    Route::post('/authors/filter', 'UserController@filterBy')->name('author.filter');
     Route::delete("/authors/{id}", 'UserController@destroy')->name('author.destroy');
     Route::get('/authors/{id}/edit', 'UserController@edit')->name('author.edit');
     Route::put('/authors/{id}', 'UserController@update')->name('author.update');
