@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -22,7 +22,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(20);
-        return response([ 'posts' => PostResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'posts' => ApiResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -70,7 +70,7 @@ class PostController extends Controller
             'post_id'=>$post->id
         ]);
             DB::commit();
-            return response([ 'user' => new PostResource($user), 'message' => 'Created successfully'], 200);
+            return response([ 'user' => new ApiResource($user), 'message' => 'Created successfully'], 200);
         } catch (Exception $e) {
             DB::rollback();
         }
@@ -85,7 +85,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post=Post::with(['tags','category','metaTags','user'])->where('id', $post->id)->get();
-        return response([ 'post' => new PostResource($post), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'post' => new ApiResource($post), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -99,7 +99,7 @@ class PostController extends Controller
     {
         $post->update($request->all());
 
-        return response([ 'user' => new PostResource($post), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'user' => new ApiResource($post), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**

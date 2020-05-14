@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Tag;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\TagResource;
+use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -23,7 +23,7 @@ class TagController extends Controller
     {
         $tags = Tag::with('posts')->orderBy('created_at', 'desc')->paginate(7);
         ;
-        return response([ 'tags' => TagResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'tags' => ApiResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -52,7 +52,7 @@ class TagController extends Controller
         $tag = Tag::create($data);
 
 
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Created successfully'], 200);
+        return response([ 'tag' => new ApiResource($tag), 'message' => 'Created successfully'], 200);
     }
 
     /**
@@ -64,7 +64,7 @@ class TagController extends Controller
     public function show(Tag $tag)
     {
         $tag=Tag::with('posts')->where('id', $tag->id)->get();
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'tag' => new ApiResource($tag), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -78,7 +78,7 @@ class TagController extends Controller
     {
         $tag->update($request->all());
 
-        return response([ 'tag' => new TagResource($tag), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'tag' => new ApiResource($tag), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**

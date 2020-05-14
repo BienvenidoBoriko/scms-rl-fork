@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response([ 'users' => UserResource::collection($users), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'users' => ApiResource::collection($users), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
         $user = User::create($data);
 
 
-        return response([ 'user' => new UserResource($user), 'message' => 'Created successfully'], 200);
+        return response([ 'user' => new ApiResource($user), 'message' => 'Created successfully'], 200);
     }
 
     /**
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response([ 'user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'user' => new ApiResource($user), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -83,7 +83,7 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
-        return response([ 'user' => new UserResource($user), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'user' => new ApiResource($user), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**

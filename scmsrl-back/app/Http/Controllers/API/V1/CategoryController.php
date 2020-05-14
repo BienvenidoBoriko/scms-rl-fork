@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Category;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('posts')->orderBy('created_at', 'desc')->paginate(7);
-        return response([ 'categories' => CategoryResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'categories' => ApiResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $category = Category::create($data);
 
 
-        return response([ 'category' => new CategoryResource($category), 'message' => 'Created successfully'], 200);
+        return response([ 'category' => new ApiResource($category), 'message' => 'Created successfully'], 200);
     }
 
     /**
@@ -65,7 +65,7 @@ class CategoryController extends Controller
     {
         $category=Category::with('posts')->where('id', $category->id)->get();
 
-        return response([ 'category' => new CategoryResource($category), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'category' => new ApiResource($category), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     {
         $category->update($request->all());
 
-        return response([ 'category' => new CategoryResource($category), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'category' => new ApiResource($category), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**

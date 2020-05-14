@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Setting;
-use App\Http\Resources\SettingResource;
+use App\Http\Resources\ApiResource;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -21,7 +21,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all();
-        return response([ 'settings' => SettingResource::collection($settings), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'settings' => ApiResource::collection($settings), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -57,7 +57,7 @@ class SettingController extends Controller
     {
         $setting->update($request->all());
 
-        return response([ 'setting' => new SettingResource($setting), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'setting' => new ApiResource($setting), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
