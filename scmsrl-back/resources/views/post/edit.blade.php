@@ -10,30 +10,46 @@
         <div class="form-group">
             <div class="form-row">
                 <div class="col">
-                    <label for="titulo">Titulo<br></label><input name="title" class="form-control" type="text"
-                value="{{ $post->title}}" id="titulo" required="required">
+                    <label for="title">Titulo<br></label><input name="title"
+                        class="form-control @error('title') is-invalid @enderror" type="text"
+                        value="{{ $post->title }}" id="title" required="required">
+                    <x-error-message name="title" />
                 </div>
 
-                <div class="col"><label for="titulo">slug<br></label><input name="slug" class="form-control"
-                    value="{{ $post->slug}}" type="text"></div>
+                <div class="col"><label for="titulo">slug<br></label><input name="slug"
+                        class="form-control @error('slug') is-invalid @enderror" value="{{ $post->slug }}"
+                        type="text">
+                    <x-error-message name="slug" />
+                </div>
             </div>
         </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="mDesc">Meta Descripcion<br></label><textarea name="meta_desc"
-                        class="form-control" id="mDesc">{{ $post->meta_desc}}</textarea></div>
-                <div class="col"><label for="pClaves">Meta Titulo<br></label><textarea name="meta_title"
-                        class="form-control" id="pClaves">{{ $post->meta_title}}</textarea></div>
-                <div class="col"><label for="dCorta">Descripcion Corta<br></label><textarea name="custom_except"
-                            class="form-control" id="dCorta">{{ $post->custom_except}}</textarea></div>
+                <div class="col"><label for="meta_desc">Meta Descripcion<br></label><textarea name="meta_desc"
+                        class="form-control @error('meta_desc') is-invalid @enderror"
+                        id="meta_desc">{{ $post->meta_desc }}</textarea>
+                    <x-error-message name="meta_desc" />
+                </div>
+                <div class="col"><label for="meta_title">Meta Titulo<br></label><textarea name="meta_title"
+                        class="form-control @error('meta_title') is-invalid @enderror"
+                        id="meta_title">{{ $post->meta_title }}</textarea>
+                    <x-error-message name="meta_title" />
+                </div>
+                <div class="col"><label for="custom_except">Descripcion Corta<br></label><textarea name="custom_except"
+                        class="form-control @error('custom_except') is-invalid @enderror"
+                        id="custom_except">{{ $post->custom_except }}</textarea>
+                    <x-error-message name="custom_except" />
+                </div>
             </div>
         </div>
-        <div class="form-group"><label for="contenido">Contenido<br></label><textarea name="html" class="form-control"
-                id="contenido" >{{ $post->html}}</textarea></div>
+        <div class="form-group"><label for="html">Contenido<br></label><textarea name="html"
+                class="form-control @error('html') is-invalid @enderror" id="html">{{ $post->html }}</textarea>
+            <x-error-message name="html" />
+        </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label for="categoria">Categoria<br></label><select name="category_id"
-                        class="form-control" id="categoria">
+                <div class="col"><label for="category_id">Categoria<br></label><select name="category_id"
+                        class="form-control @error('category_id') is-invalid @enderror" id="category_id">
                         <optgroup label="categorias">
                             @foreach($categories as $category)
                                 @if($loop->first )
@@ -45,6 +61,7 @@
                             @endforeach
                         </optgroup>
                     </select>
+                    <x-error-message name="category_id" />
                 </div>
                 <div class="col">
                     <fieldset class="border border-secondary p-2">
@@ -62,19 +79,24 @@
                             </div>
                         @endforeach
                     </fieldset>
+                    <x-error-message name="tags" />
                 </div>
             </div>
         </div>
         <div class="form-group">
-                <div class="custom-control custom-radio custom-control-inline ">
-                    <input name="featured" {{ $post->featured==1 ? 'checked=checked' : ''}} value="1" class="custom-control-input" type="radio"
-                        id="destacado"><label class="custom-control-label" for="destacado">Destacado</label>
-                </div>
+            <div class="custom-control custom-radio custom-control-inline ">
+                <input name="featured"
+                    {{ $post->featured==1 ? 'checked=checked' : '' }}
+                    value="1" class="custom-control-input" type="radio" id="featured"><label
+                    class="custom-control-label" for="featured">Destacado</label>
+                <x-error-message name="featured" />
+            </div>
         </div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col">
-                    <label for="autor">Autor<br></label><select name="author_id" class="form-control" id="autor">
+                    <label for="autor">Autor<br></label><select name="author_id"
+                        class="form-control @error('author_id') is-invalid @enderror" id="autor">
                         <optgroup label="posibles autores">
                             @foreach($users as $user)
                                 @if($user->id === Auth::user()->id)
@@ -85,10 +107,13 @@
                             @endforeach
                         </optgroup>
                     </select>
+                    <x-error-message name="author_id" />
                 </div>
 
                 <div class="col">
-                    <label for="mDesc">Imagen de cabecera<br></label><input name="featured_img" type="file">
+                    <label class="custom-file-label" for="featured_img">Imagen de cabecera<br></label><input
+                        class="custom-file-input" id="featured_img" name="featured_img" type="file">
+                    <x-error-message name="featured_img" />
                 </div>
 
             </div>
@@ -99,8 +124,9 @@
 </section>
 <script>
     CKEDITOR.replace('html', {
-    filebrowserUploadUrl: "{{route('post.image.upload', ['_token' => csrf_token() ])}}",
-    filebrowserUploadMethod: 'form'
-});
+        filebrowserUploadUrl: "{{ route('post.image.upload', ['_token' => csrf_token() ]) }}",
+        filebrowserUploadMethod: 'form'
+    });
+
 </script>
 @endsection

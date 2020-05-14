@@ -93,7 +93,6 @@
             <x-navbar />
             <x-breadcrumbs/>
             <x-success-message/>
-            <x-error-message/>
             <section class="mr-3 ml-3 pt-3 " >
                 @yield('content')
             </section>

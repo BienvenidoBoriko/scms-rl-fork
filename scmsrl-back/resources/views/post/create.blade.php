@@ -9,30 +9,47 @@
         <div class="form-group">
             <div class="form-row">
                 <div class="col">
-                    <label for="titulo">Titulo<br></label><input name="title" class="form-control" type="text"
-                       value="{{old('title')}}" id="titulo" required="required">
+                    <label for="title">Titulo<br></label><input name="title"
+                        class="form-control @error('title') is-invalid @enderror" type="text"
+                        value="{{ old('title') }}" id="title" required="required">
+                    <x-error-message name="title" />
                 </div>
 
-                <div class="col"><label for="slug">slug<br></label><input id="slug" name="slug" class="form-control"
-                      value="{{old('slug')}}"   type="text"></div>
+                <div class="col"><label for="slug">slug<br></label><input id="slug" name="slug"
+                        class="form-control @error('slug') is-invalid @enderror"
+                        value="{{ old('slug') }}" type="text">
+                    <x-error-message name="slug" />
+                </div>
             </div>
         </div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col"><label for="meta_desc">Meta Descripcion<br></label><textarea name="meta_desc"
-                        class="form-control" id="meta_desc">{{old('meta_desc')}}</textarea></div>
+                        class="form-control @error('meta_desc') is-invalid @enderror"
+                        id="meta_desc">{{ old('meta_desc') }}</textarea>
+                    <x-error-message name="meta_desc" />
+                </div>
                 <div class="col"><label for="meta_title">Meta Titulo<br></label><textarea name="meta_title"
-                        class="form-control" id="meta_title">{{old('meta_title')}}</textarea></div>
-                <div class="col"><label for="dCorta">Descripcion Corta<br></label><textarea name="custom_except"
-                            class="form-control" id="dCorta">{{old('custom_except')}}</textarea></div>
+                        class="form-control @error('meta_title') is-invalid @enderror"
+                        id="meta_title">{{ old('meta_title') }}</textarea>
+                    <x-error-message name="meta_title" />
+                </div>
+                <div class="col"><label for="custom_except">Descripcion Corta<br></label><textarea name="custom_except"
+                        class="form-control @error('custom_except') is-invalid @enderror"
+                        id="custom_except">{{ old('custom_except') }}</textarea>
+                    <x-error-message name="custom_except" />
+                </div>
             </div>
         </div>
-        <div class="form-group"><label for="html">Contenido<br></label><textarea name="html" class="form-control"
-                id="html" >{{old('html')}} </textarea></div>
+        <div class="form-group"><label for="html">Contenido<br></label><textarea name="html"
+                class="form-control @error('html') is-invalid @enderror"
+                id="html">{{ old('html') }} </textarea>
+            <x-error-message name="html" />
+        </div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col"><label for="categoria">Categoria<br></label><select name="category_id"
-                        class="form-control" id="categoria">
+                        class="form-control @error('category_id') is-invalid @enderror" id="categoria">
                         <optgroup label="categorias">
                             @foreach($categories as $category)
                                 @if( $loop->first )
@@ -44,6 +61,7 @@
                             @endforeach
                         </optgroup>
                     </select>
+                    <x-error-message name="category_id" />
                 </div>
                 <div class="col">
                     <fieldset class="border border-secondary p-2">
@@ -51,29 +69,34 @@
                         @foreach($tags as $tag)
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 @if( $loop->first)
-                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox" id="{{ $tag->name }}"
-                                        checked="checked" name="tags[]" value="{{ $tag->id }}">
-                                @else
-                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox" name="tags[]"
+                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox"
+                                        id="{{ $tag->name }}" checked="checked" name="tags[]"
                                         value="{{ $tag->id }}">
+                                @else
+                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox"
+                                        name="tags[]" value="{{ $tag->id }}">
                                 @endif
                                 <label class="custom-control-label" for="{{ $tag->name }}">{{ $tag->name }}</label>
                             </div>
                         @endforeach
                     </fieldset>
+                    <x-error-message name="tags" />
                 </div>
             </div>
         </div>
         <div class="form-group">
-                <div class="custom-control custom-radio custom-control-inline ">
-                    <input name="featured" class="custom-control-input" type="radio"
-                     value="{{old('featured','1')}} " id="featured"><label class="custom-control-label" for="featured">Destacado</label>
-                </div>
+            <div class="custom-control custom-radio custom-control-inline ">
+                <input name="featured" class="custom-control-input @error('featured') is-invalid @enderror" type="radio"
+                    value="{{ old('featured','1') }} " id="featured"><label
+                    class="custom-control-label" for="featured">Destacado</label>
+                <x-error-message name="featured" />
+            </div>
         </div>
         <div class="form-group">
             <div class="form-row">
                 <div class="col">
-                    <label for="autor">Autor<br></label><select name="author_id" class="custom-select" id="autor">
+                    <label for="autor">Autor<br></label><select name="author_id"
+                        class="custom-select @error('author_id') is-invalid @enderror" id="autor">
                         <optgroup label="posibles autores">
                             @foreach($users as $user)
                                 @if( $user->id === Auth::user()->id)
@@ -84,10 +107,14 @@
                             @endforeach
                         </optgroup>
                     </select>
+                    <x-error-message name="author_id" />
                 </div>
 
                 <div class="col">
-                    <label class="custom-file-label" for="featured_img">Imagen de cabecera<br></label><input class="custom-file-input" id="featured_img" name="featured_img" type="file">
+                    <label class="custom-file-label custom-file-label" for="featured_img">Imagen de
+                        cabecera<br></label><input class="custom-file-input @error('featured_img') is-invalid @enderror"
+                        id="featured_img" name="featured_img" type="file">
+                    <x-error-message name="featured_img" />
                 </div>
 
             </div>
@@ -98,9 +125,10 @@
 </section>
 <script>
     CKEDITOR.replace('html', {
-    filebrowserUploadUrl: "{{route('post.image.upload', ['_token' => csrf_token() ])}}",
-    filebrowserUploadMethod: 'form'
-});
+        filebrowserUploadUrl: "{{ route('post.image.upload', ['_token' => csrf_token() ]) }}",
+        filebrowserUploadMethod: 'form'
+    });
+
 </script>
 
 @endsection
