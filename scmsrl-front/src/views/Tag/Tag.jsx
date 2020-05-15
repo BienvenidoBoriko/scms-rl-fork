@@ -24,7 +24,7 @@ const Tag = ({ tags }) => {
         return (
           <Fragment>
             {postsChunked.map((post, index) => {
-              return <CardList key={index} posts={post} title={`Post en la categoria ${tag.name}`} />;
+              return <CardList key={index} posts={post} title={`post con la etiqueta  ${tag.name}`} />;
             })}
           </Fragment>
         );

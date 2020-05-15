@@ -25,7 +25,11 @@ const Post = (props) => {
 
   return (() => {
     if (loading) {
-      return <Loading width="75" height="75" />;
+      return (
+        <div className="post-loading">
+          <Loading width="75" height="75" />
+        </div>
+      );
     } else {
       return (
         <Fragment>

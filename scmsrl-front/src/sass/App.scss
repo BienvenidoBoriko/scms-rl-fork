@@ -1,21 +1,44 @@
-@import '~bootstrap/scss/bootstrap.scss';
+@import "variables";
 
-@import './../views/Category/category.scss';
+@import "~bootstrap/scss/bootstrap.scss";
+$theme-colors: map-merge(
+  (
+    "bg-dark": #121212,
+    "text-light": rgba(255, 255, 255, 0.88),
+    "bg-light": $white,
+    "text-dark": #333333,
+    "second-bg-light": #f6f7f8,
+    "second-bg-dark": #2a2a2a,
+    "second-text-light": rgba(255, 255, 255, 0.54),
+    "second-text-dark": #888,
+  ),
+  $theme-colors
+);
+body.home {
+  background-color: theme-color("bg-light");
+  color: theme-color("text-dark");
+}
 
-@import './../views/Tag/tag.scss';
+body.home.theme-dark {
+  background-color: theme-color("bg-dark");
+  color: theme-color("text-light");
+}
+@import "./../views/Category/category.scss";
 
-@import './../views/Home/home.scss';
+@import "./../views/Tag/tag.scss";
 
-@import './../views/Post/post.scss';
+@import "./../views/Home/home.scss";
 
-@import './../components/header/header.scss';
+@import "./../views/Post/post.scss";
+@import "./../components/postContent/postContent.scss";
+@import "./../components/header/header.scss";
 
-@import './../components/NavBar/navBar.scss';
+@import "./../components/NavBar/navBar.scss";
 
-@import './../components/footer/footer.scss';
+@import "./../components/footer/footer.scss";
 
-@import './../components/card/card.scss';
+@import "./../components/card/card.scss";
 
-@import './../components/cardList/cardList.scss';
+@import "./../components/cardList/cardList.scss";
 
-@import './../components/loading/loading.scss'
+@import "./../components/loading/loading.scss";

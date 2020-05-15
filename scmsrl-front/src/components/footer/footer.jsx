@@ -37,7 +37,7 @@ const Footer = ({ categories, tags, settings }) => {
                   <h3>{settings[0].value}</h3>
                   <p>{settings[1].value}</p>
                 </div>
-                <div class="col-md-12 item social">
+                <div class="col-md-12 item social mt-2">
                   <Link to={settings[4].value}>
                     <i class="fab fa-facebook"></i>
                   </Link>
