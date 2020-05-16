@@ -6,7 +6,7 @@
 
   & .navbar-brand {
     font-weight: 800;
-    color: #343a40;
+    color: theme-color("text-dark");
   }
 
   & .navbar-toggler {
@@ -14,7 +14,7 @@
     font-weight: 800;
     padding: 13px;
     text-transform: uppercase;
-    color: #343a40;
+    color: theme-color("text-dark");
   }
 
   & .navbar-nav > li.nav-item > a {
@@ -36,15 +36,19 @@
 
       &:focus,
       &:hover {
-        color: hsla(0, 0%, 100%, 0.8);
+        color: theme-color("text-light");
       }
+    }
+
+    & .navbar-toggler {
+      color: theme-color("text-light");
     }
 
     & .navbar-brand {
       color: theme-color("text-light");
       &:focus,
       &:hover {
-        color: hsla(0, 0%, 100%, 0.8);
+        color: theme-color("text-light");
       }
     }
   }
@@ -89,7 +93,7 @@
 
     & .navbar-brand {
       padding: 10px 20px;
-      color: #fff;
+      color: theme-color("text-light");
 
       &:focus,
       &:hover {
@@ -110,22 +114,22 @@
         color: #212529;
         &:focus,
         &:hover {
-          color: #0085a1;
+          color: theme-color("primary");
         }
       }
 
       & .navbar-nav > li.nav-item > a {
-        color: #212529;
+        color: theme-color("text-dark");
         &:focus,
         &:hover {
-          color: #0085a1;
+          color: theme-color("primary");
         }
       }
     }
 
     & .navbar-nav > li.nav-item > a {
       padding: 10px 20px;
-      color: #fff;
+      color: theme-color("text-light");
 
       &:focus,
       &:hover {

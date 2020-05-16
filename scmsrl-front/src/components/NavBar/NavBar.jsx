@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import $ from "jquery";
 
-const NavBar = ({ title, categories, tags }) => {
+const NavBar = ({ title, categories, tags, reloadContent }) => {
   const changeTheme = (e) => {
     $(".theme-icon").toggle();
     $("body").toggleClass("theme-dark");
@@ -72,6 +72,11 @@ const NavBar = ({ title, categories, tags }) => {
               <a href="#" class="button-left" onClick={changeTheme}>
                 <i class="far fa-moon theme-icon"></i>
                 <i class="far fa-sun theme-icon"></i>
+              </a>
+            </li>
+            <li className="nav-item" role="presentation">
+              <a href="#" onClick={reloadContent}>
+                <i class="fas fa-redo"></i>
               </a>
             </li>
           </ul>

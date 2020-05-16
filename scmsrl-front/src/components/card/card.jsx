@@ -6,7 +6,7 @@ const Card = ({ img, title, desc, id }) => {
   return (
     <div className="card mt-3 mb-4 pb-1">
       <Link to={`posts/${id}`}>
-        <img className="card-img-top" src={config.host + img} />
+        <img className="card-img-top" src={config.host + img} alt={title} />
       </Link>
       <div className="card-body">
         <h5 className="card-title">{title}</h5>

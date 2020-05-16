@@ -15,7 +15,7 @@ const PostHeader = ({ title, author, published_at, img }) => {
               <h1>{title}</h1>
               {/* <h2 class="subheading">{desc}</h2> */}
               <span class="meta">
-                Publicado por <a href="#">{author}</a>&nbsp; {moment(published_at).fromNow()}
+                Publicado por {author} {moment(published_at).fromNow()}
               </span>
             </div>
           </div>

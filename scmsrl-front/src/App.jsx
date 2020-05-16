@@ -32,12 +32,17 @@ function App() {
       .then((data) => data.posts);
     setData(datas);
     setLoading(false);
+    console.log("recarga");
     return datas;
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  const reloadContent = () => {
+    getData();
+  };
   return (() => {
     if (loading) {
       return <Loading width="75" height="75" />;
@@ -45,7 +50,7 @@ function App() {
       return (
         <div className="App">
           <Router>
-            <NavBar title={data.settings[0].value} categories={data.categories} tags={data.tags} />
+            <NavBar title={data.settings[0].value} categories={data.categories} tags={data.tags} reloadContent={reloadContent} />
 
             <Switch>
               <Route exact path="/" render={(props) => <Home settings={data.settings} tags={data.tags} posts={data.posts} categories={data.categories} />} />
