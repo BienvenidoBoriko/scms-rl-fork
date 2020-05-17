@@ -13,7 +13,7 @@ const Footer = ({ categories, tags, settings }) => {
                 {categories.map((category, index) => {
                   return (
                     <li key={index}>
-                      <Link to={`categories/${category.id}`}>{category.name}</Link>
+                      <Link to={`/categories/${category.id}`}>{category.name}</Link>
                     </li>
                   );
                 })}
@@ -25,7 +25,7 @@ const Footer = ({ categories, tags, settings }) => {
                 {tags.map((tag, index) => {
                   return (
                     <li key={index}>
-                      <Link to={`tags/${tag.id}`}>{tag.name}</Link>
+                      <Link to={`/tags/${tag.id}`}>{tag.name}</Link>
                     </li>
                   );
                 })}
@@ -38,16 +38,16 @@ const Footer = ({ categories, tags, settings }) => {
                   <p>{settings[1].value}</p>
                 </div>
                 <div class="col-md-12 item social mt-2">
-                  <Link to={settings[4].value}>
+                  <Link to={`/${settings[4].value}`}>
                     <i class="fab fa-facebook"></i>
                   </Link>
-                  <Link to={settings[5].value}>
+                  <Link to={`/${settings[5].value}`}>
                     <i class="fab fa-twitter-square"></i>
                   </Link>
-                  <Link to={settings[6].value}>
+                  <Link to={`/${settings[6].value}`}>
                     <i class="fas fa-envelope-square"></i>
                   </Link>
-                  <Link to={settings[7].value}>
+                  <Link to={`/${settings[7].value}`}>
                     <i class="fab fa-github-square"></i>
                   </Link>
                 </div>
