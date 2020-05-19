@@ -38,18 +38,18 @@ const Footer = ({ categories, tags, settings }) => {
                   <p>{settings[1].value}</p>
                 </div>
                 <div class="col-md-12 item social mt-2">
-                  <Link to={`/${settings[4].value}`}>
+                  <a href={`http://${settings[4].value}`} target="_blank">
                     <i class="fab fa-facebook"></i>
-                  </Link>
-                  <Link to={`/${settings[5].value}`}>
+                  </a>
+                  <a href={`http://${settings[5].value}`} target="_blank">
                     <i class="fab fa-twitter-square"></i>
-                  </Link>
-                  <Link to={`/${settings[6].value}`}>
+                  </a>
+                  <a href={`http://${settings[6].value}`} target="_blank">
                     <i class="fas fa-envelope-square"></i>
-                  </Link>
-                  <Link to={`/${settings[7].value}`}>
+                  </a>
+                  <a href={`http://${settings[7].value}`} target="_blank">
                     <i class="fab fa-github-square"></i>
-                  </Link>
+                  </a>
                 </div>
               </Fragment>
             ) : (
