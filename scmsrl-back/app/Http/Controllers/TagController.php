@@ -108,14 +108,16 @@ class TagController extends Controller
             'meta_title' => ['required','string','max:70'],
             'meta_desc' => ['required','string','max:200'],
         ]);
-
-        $tiempo=time();
-        $request->file('featured_img')->storeAs(
-            'public/uploads/',
-            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
-        );
-        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
-
+        if (!empty($request->file('featured_img'))) {
+            $tiempo=time();
+            $request->file('featured_img')->storeAs(
+                'public/uploads/',
+                $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            );
+            $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        } else {
+            $pathFeaturedImg=$post->featured_img;
+        }
         $data = [
 
             'name' => $request->input('name'),

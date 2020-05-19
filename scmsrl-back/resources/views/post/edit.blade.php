@@ -110,9 +110,9 @@
                     <x-error-message name="author_id" />
                 </div>
 
-                <div class="col">
-                    <label class="custom-file-label" for="featured_img">Imagen de cabecera<br></label><input
-                        class="custom-file-input" id="featured_img" name="featured_img" type="file">
+                <div class="col custom-file">
+                    <input type="file" class="custom-file-input" id="featured_img" @error('featured_img') is-invalid @enderror name="featured_img" >
+                    <label class="custom-file-label" for="featured_img">Imagen de cabecera</label>
                     <x-error-message name="featured_img" />
                 </div>
 

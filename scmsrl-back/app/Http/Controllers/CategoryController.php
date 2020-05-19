@@ -54,14 +54,16 @@ class CategoryController extends Controller
             'meta_desc' => ['required','string','max:200'],
             'visibility'=>['required','string']
         ]);
-
-        $tiempo=time();
-        $request->file('featured_img')->storeAs(
-            'public/uploads/',
-            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
-        );
-        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
-
+        if (!empty($request->file('featured_img'))) {
+            $tiempo=time();
+            $request->file('featured_img')->storeAs(
+                'public/uploads/',
+                $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
+            );
+            $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        } else {
+            $pathFeaturedImg=$post->featured_img;
+        }
         $data = [
 
             'name' => $request->input('name'),

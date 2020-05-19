@@ -81,7 +81,6 @@ class PostController extends Controller
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
-            //'cover_image' => $pathFeaturedImg,//eliminar
             'slug' => $request->input('slug'),
             'user_id' => $request->input('author_id'),
             'featured' => $request->input('featured'),
@@ -147,7 +146,7 @@ class PostController extends Controller
             'published_at'=>['nullable','date'],
             'plain_text' => ['string','nullable'],
             'html' => ['required','string'],
-            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
+            'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp'],
             'featured' => ['required','boolean'],
             'meta_title'=>['required', 'string'],
             'meta_desc'=>['required', 'string'],
@@ -156,14 +155,16 @@ class PostController extends Controller
             'tags' => ['required','array'],
             'category_id' => ['required','string','nullable']
         ]);
-
-        $tiempo=time();
-        $request->file('featured_img')->storeAs(
-            'public/uploads/',
-            $tiempo .  \trim($request->file('featured_img')->getClientOriginalName())
-        );
-        $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
-
+        if (!empty($request->file('featured_img'))) {
+            $tiempo=time();
+            $request->file('featured_img')->storeAs(
+                'public/uploads/',
+                $tiempo.\trim($request->file('featured_img')->getClientOriginalName())
+            );
+            $pathFeaturedImg = 'storage/uploads/'. $tiempo .\trim($request->file('featured_img')->getClientOriginalName());
+        } else {
+            $pathFeaturedImg=$post->featured_img;
+        }
         $data = [
 
             'title' => $request->input('title'),
@@ -218,6 +219,10 @@ class PostController extends Controller
         return view('post.index', [
             'posts' => $posts
         ]);
+    }
+
+    public function changeStatus($id)
+    {
     }
 
     public function upload(Request $request)
