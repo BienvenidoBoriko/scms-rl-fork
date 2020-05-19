@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Config;
 
 class SettingController extends Controller
 {
@@ -49,23 +50,23 @@ class SettingController extends Controller
             'title' => ['required','string','max:200'],
             'desc' => ['required','string','max:250'],
             'lang' => ['required','string','max:10'],
-            'cover_img' => ['image', 'mimes:png,jpg,jpeg,bmp','required'],
+            'cover_img' => ['image', 'mimes:png,jpg,jpeg,bmp','nullable'],
             'facebook' => ['required','string','max:200'],
             'twitter' => ['required','string','max:200'],
             'email' => ['required','string','max:200'],
             'github' => ['required','string','max:200']
         ]);
 
-        $extension = $request->file('cover_img')->extension();
+        if (!empty($request->file('cover_img'))) {
+            $extension = $request->file('cover_img')->extension();
 
-        Storage::deleteDirectory('public/uploads/header-img');
-        $request->file('cover_img')->storeAs(
-            'public/uploads/header-img',
-            'header-img.'.$extension
-        );
-        $pathCoverImg = 'storage/uploads/header-img.'.$extension;
-
-        $data = [
+            Storage::deleteDirectory('public/uploads/header-img');
+            $request->file('cover_img')->storeAs(
+                'public/uploads/header-img',
+                'header-img.'.$extension
+            );
+            $pathCoverImg = 'storage/uploads/header-img.'.$extension;
+            $data = [
 
             'title' => $request->input('title'),
             'desc' => $request->input('desc'),
@@ -76,17 +77,33 @@ class SettingController extends Controller
             'email' => $request->input('email'),
             'github' => $request->input('github'),
         ];
+        } else {
+            $data = [
+
+            'title' => $request->input('title'),
+            'desc' => $request->input('desc'),
+            'lang' => $request->input('lang'),
+            'facebook' => $request->input('facebook'),
+            'twitter' => $request->input('twitter'),
+            'email' => $request->input('email'),
+            'github' => $request->input('github'),
+        ];
+        }
+
 
         foreach ($data as $name => $value) {
             $data = [
-
                 'name' => $name,
                 'value' => $value,
                 'type' => 'page'
             ];
+            /* if (Str::of($name)->exactly('title')) {
+                config(['.env.site_title' => 'hola']);
+                return redirect()->route('setting.index')->with('success', 'troll');
+            } */
             $setting = Setting::where('name', $name);
             $setting->update($data);
-            Setting::create($data);
+            //Setting::create($data);
         }
         return redirect()->route('setting.index')->with('success', 'ajustes guardados correctamente!');
     }

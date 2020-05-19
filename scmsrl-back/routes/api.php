@@ -25,4 +25,8 @@ Route::group(['middleware' => ['auth:api'],'prefix'=> 'v1'], function () {
     Route::apiResource('/tags', 'API\V1\TagController');
     Route::apiResource('/categories', 'API\V1\CategoryController');
     Route::apiResource('/settings', 'API\V1\SettingController');
+    Route::fallback(function () {
+        return response()->json([
+        'error' => 'Page Not Found. If error persists, contact bienvenidoborico@gmail.com'], 404);
+    });
 });
