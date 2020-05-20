@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import $ from "jquery";
 import { getPosts, getCategories, getSettings, getTags } from "./utils/peticiones";
 import "./sass/App.scss";
 import Home from "./views/Home/Home";
@@ -38,6 +39,7 @@ function App() {
 
   useEffect(() => {
     getData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const reloadContent = () => {

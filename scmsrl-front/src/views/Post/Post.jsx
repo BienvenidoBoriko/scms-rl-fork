@@ -4,6 +4,7 @@ import { getPost } from "./../../utils/peticiones";
 import PostHeader from "./../../components/post-header/post-header";
 import PostContent from "./../../components/postContent/postContent";
 import Loading from "./../../components/loading/loading";
+import $ from "jquery";
 
 const Post = (props) => {
   let { id } = useParams();
@@ -21,6 +22,7 @@ const Post = (props) => {
 
   useEffect(() => {
     getData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (() => {
