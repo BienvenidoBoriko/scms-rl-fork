@@ -21,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(20);
+        $posts = Post::where('status', 'publiced')->orderBy('created_at', 'desc')->paginate(20);
         return response([ 'posts' => ApiResource::collection($posts), 'message' => 'Retrieved successfully'], 200);
     }
 

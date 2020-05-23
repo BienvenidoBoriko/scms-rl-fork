@@ -20,7 +20,7 @@ class PostController extends Controller
     {
         $this->authorize('viewAny', Post::class);
         return view('post.index', [
-            'posts' => Post::with(['tags', 'category'])->orderBy('created_at', 'desc')->paginate(7)
+            'posts' => Post::with(['tags', 'category'])->orderBy('created_at', 'desc')->paginate(5)
         ]);
     }
 
@@ -51,7 +51,7 @@ class PostController extends Controller
         try {
             $this->validate($request, [
             'title' => ['required','string','max:200'],
-           // 'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
+            'status' => ['required','string',Rule::in(['publiced','draff']),'max:10'],//draff como borrador
             'author_id' => ['required','integer','max:20'],
             'published_at'=>['nullable','date'],
             'html' => ['required','string'],
@@ -65,6 +65,12 @@ class PostController extends Controller
             'tags' => ['required','array'],
             'category_id' => ['required','string','nullable']
         ]);
+            //verifica si el usuario ha decidio publicar el post y crea una fecha
+            if (Str::of($request->status)->exactly('publiced')) {
+                $publicationDate=date("Y-m-d H:i:s");
+            } else {
+                $publicationDate=null;
+            }
 
             $tiempo=time();
             $request->file('featured_img')->storeAs(
@@ -76,8 +82,8 @@ class PostController extends Controller
             $data = [
 
             'title' => $request->input('title'),
-            'status' => 'publiced',
-            'published_at' => $request->input('published_at'),
+            'status' => $request->input('status'),
+            'published_at' => $publicationDate,
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
@@ -141,9 +147,8 @@ class PostController extends Controller
         $this->authorize('update', $post);
         $this->validate($request, [
             'title' => ['required','string','max:200'],
-            //'status' => ['required','string',Rule::in(['publiced,draff']),'max:10'],//draff como borrador
+            'status' => ['required','string',Rule::in(['publiced','draff']),'max:10'],//draff como borrador
             'author_id' => ['required','integer','max:20'],
-            'published_at'=>['nullable','date'],
             'plain_text' => ['string','nullable'],
             'html' => ['required','string'],
             'featured_img' => ['image', 'mimes:png,jpg,jpeg,bmp'],
@@ -155,6 +160,7 @@ class PostController extends Controller
             'tags' => ['required','array'],
             'category_id' => ['required','string','nullable']
         ]);
+
         if (!empty($request->file('featured_img'))) {
             $tiempo=time();
             $request->file('featured_img')->storeAs(
@@ -168,8 +174,7 @@ class PostController extends Controller
         $data = [
 
             'title' => $request->input('title'),
-            'status' => 'publiced',
-            'published_at' => $request->input('published_at'),
+            'status' => $request->input('status'),
             'plain_text' => $request->input('plain_text'),
             'html' => $request->input('html'),
             'featured_img' => $pathFeaturedImg,
@@ -221,8 +226,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function changeStatus($id)
+    public function changeStatus(Request $request, $id)
     {
+        //return redirect()->route('post.index')->with('success', 'Estatus cambiado correctamente');
+
+        $post = Post::findOrFail($id);
+        $this->validate($request, [
+            'status' => ['required','string',Rule::in(['publiced','draff']),'max:10']//draff como borrador
+         ]);
+
+        $post->status = $request->status;
+        $post->published_at=date("Y-m-d H:i:s");
+
+        //print_r($request->status);
+
+        $post->save();
+
+        return redirect()->route('post.index')->with('success', 'Estado cambiado correctamente');
     }
 
     public function upload(Request $request)

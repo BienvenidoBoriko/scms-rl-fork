@@ -85,16 +85,36 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="custom-control custom-radio custom-control-inline ">
-                <input name="featured" class="custom-control-input @error('featured') is-invalid @enderror" type="radio"
-                    value="{{ old('featured','1') }} " id="featured"><label
-                    class="custom-control-label" for="featured">Destacado</label>
-                <x-error-message name="featured" />
-            </div>
-        </div>
-        <div class="form-group">
             <div class="form-row">
-                <div class="col">
+                <div class="col-md-2">
+                    <div class="custom-control custom-radio custom-control-inline ">
+                        <input name="featured" class="custom-control-input @error('featured') is-invalid @enderror"
+                            type="radio" value="{{ old('featured','1') }} "
+                            id="featured"><label class="custom-control-label" for="featured">Destacado</label>
+                        <x-error-message name="featured" />
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <fieldset class="border border-secondary p-2">
+                        <legend class="h6">Estado</legend>
+                        <div class="custom-control custom-radio">
+                            <input type="radio"
+                                {{ old('status')=='publiced'?'checked="checked"':'' }}
+                                id="publiced" value="publiced" name="status"
+                                class="custom-control-input @error('status') is-invalid @enderror">
+                            <label class="custom-control-label" for="publiced">Publicar</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" {{ old('status')=='draff'?'checked="checked"':'' }} id="draff" name="status" value="draff" class="custom-control-input">
+                            <label class="custom-control-label @error('status') is-invalid @enderror" for="draff">Guardar
+                                como borrador</label>
+                        </div>
+                    </fieldset>
+                    <x-error-message name="status" />
+                </div>
+
+                <div class="col-md-3">
                     <label for="autor">Autor<br></label><select name="author_id"
                         class="custom-select @error('author_id') is-invalid @enderror" id="autor">
                         <optgroup label="posibles autores">
@@ -110,11 +130,14 @@
                     <x-error-message name="author_id" />
                 </div>
 
-                <div class="col">
-                    <label class="custom-file-label custom-file-label" for="featured_img">Imagen de
-                        cabecera<br></label><input class="custom-file-input @error('featured_img') is-invalid @enderror"
-                        id="featured_img" name="featured_img" type="file">
-                    <x-error-message name="featured_img" />
+                <div class="col-md-4 mt-4">
+                    <div class="custom-file">
+                        <input class="custom-file-input @error('featured_img') is-invalid @enderror" id="featured_img"
+                            name="featured_img" type="file">
+                        <label class="custom-file-label" for="featured_img">Imagen de
+                            cabecera</label>
+                        <x-error-message name="featured_img" />
+                    </div>
                 </div>
 
             </div>

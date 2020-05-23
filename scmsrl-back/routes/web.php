@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/posts/image/upload', 'PostController@upload')->name('post.image.upload');
     Route::post('/posts/filter', 'PostController@filterBy')->name('post.filter');
     Route::delete('/posts/{id}', 'PostController@destroy')->name('post.destroy');
+    Route::post('/posts/{id}/changeStatus', 'PostController@changeStatus')->name('post.changeStatus');
     Route::get('/posts/{id}/edit', 'PostController@edit')->name('post.edit');
     Route::put('/posts/{id}', 'PostController@update')->name('post.update');
 
@@ -49,7 +50,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/categories/filter', 'CategoryController@filterBy')->name('category.filter');
     Route::get('/categories/{id}/edit', 'CategoryController@edit')->name('category.edit');
     Route::put('/categories/{id}', 'CategoryController@update')->name('category.update');
-
     Route::delete('/categories/{id}', 'CategoryController@destroy')->name('category.destroy');
 
     //Route::get('/settings', 'SettingController@index')->name('setting.index');

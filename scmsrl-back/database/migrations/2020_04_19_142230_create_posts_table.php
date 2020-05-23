@@ -19,9 +19,9 @@ class CreatePostsTable extends Migration
             $table->string('status', 10);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamp('published_at');
+            $table->dateTime('published_at')->nullable();
             $table->string('plain_text')->nullable();
-            $table->string('html', 10000);
+            $table->string('html', 15000);
             $table->string('featured_img', 100);
             $table->boolean('featured');
             $table->string('custom_except', 200);

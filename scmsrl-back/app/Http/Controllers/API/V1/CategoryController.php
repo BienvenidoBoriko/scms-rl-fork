@@ -21,7 +21,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('posts')->orderBy('created_at', 'desc')->paginate(7);
+        $categories = Category::with(['posts'=> function ($q) {
+            $q->where('status', 'publiced');
+        }])->orderBy('created_at', 'desc')->paginate(7);
         return response([ 'categories' => ApiResource::collection($categories), 'message' => 'Retrieved successfully'], 200);
     }
 
@@ -63,7 +65,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $category=Category::with('posts')->where('id', $category->id)->get();
+        $category=Category::with(['posts'=> function ($q) {
+            $q->where('status', 'publiced');
+        }])->where('id', $category->id)->get();
 
         return response([ 'category' => new ApiResource($category), 'message' => 'Retrieved successfully'], 200);
     }

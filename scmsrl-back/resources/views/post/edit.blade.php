@@ -72,7 +72,7 @@
                                     <input class="custom-control-input" type="checkbox" id="{{ $tag->name }}"
                                         checked="checked" name="tags[]" value="{{ $tag->id }}">
                                 @else
-                                    <input class="custom-control-input" type="checkbox" name="tags[]"
+                                    <input class="custom-control-input" id="{{ $tag->name }}" type="checkbox" name="tags[]"
                                         value="{{ $tag->id }}">
                                 @endif
                                 <label class="custom-control-label" for="{{ $tag->name }}">{{ $tag->name }}</label>
@@ -83,20 +83,43 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="custom-control custom-radio custom-control-inline ">
-                <input name="featured"
-                    {{ $post->featured==1 ? 'checked=checked' : '' }}
-                    value="1" class="custom-control-input" type="radio" id="featured"><label
-                    class="custom-control-label" for="featured">Destacado</label>
-                <x-error-message name="featured" />
-            </div>
-        </div>
+
         <div class="form-group">
             <div class="form-row">
-                <div class="col">
+                <div class="col-md-2">
+                    <div class="custom-control custom-radio custom-control-inline ">
+                        <input name="featured" class="custom-control-input @error('featured') is-invalid @enderror"
+                            type="radio"
+                            {{ $post->featured==1 ? 'checked=checked' : '' }}
+                            value="1" id="featured"><label class="custom-control-label" for="featured">Destacado</label>
+                        <x-error-message name="featured" />
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <fieldset class="border border-secondary p-2">
+                        <legend class="h6">Estado</legend>
+                        <div class="custom-control custom-radio">
+                            <input type="radio"
+                                {{ $post->status=='publiced'?'checked="checked"':'' }}
+                                id="publiced" value="publiced" name="status"
+                                class="custom-control-input @error('status') is-invalid @enderror">
+                            <label class="custom-control-label" for="publiced">Publicar</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio"
+                                {{ $post->status=='draff'?'checked="checked"':'' }}
+                                id="draff" name="status" value="draff" class="custom-control-input">
+                            <label class="custom-control-label @error('status') is-invalid @enderror" for="draff">Guardar
+                                como borrador</label>
+                        </div>
+                    </fieldset>
+                    <x-error-message name="status" />
+                </div>
+
+                <div class="col-md-3">
                     <label for="autor">Autor<br></label><select name="author_id"
-                        class="form-control @error('author_id') is-invalid @enderror" id="autor">
+                        class="custom-select @error('author_id') is-invalid @enderror" id="autor">
                         <optgroup label="posibles autores">
                             @foreach($users as $user)
                                 @if($user->id === Auth::user()->id)
@@ -110,14 +133,19 @@
                     <x-error-message name="author_id" />
                 </div>
 
-                <div class="col custom-file">
-                    <input type="file" class="custom-file-input" id="featured_img" @error('featured_img') is-invalid @enderror name="featured_img" >
-                    <label class="custom-file-label" for="featured_img">Imagen de cabecera</label>
-                    <x-error-message name="featured_img" />
+                <div class="col-md-4 mt-4">
+                    <div class="custom-file">
+                        <input class="custom-file-input @error('featured_img') is-invalid @enderror" id="featured_img"
+                            name="featured_img" type="file">
+                        <label class="custom-file-label" for="featured_img">Imagen de
+                            cabecera</label>
+                        <x-error-message name="featured_img" />
+                    </div>
                 </div>
 
             </div>
         </div>
+
         <button class="btn btn-primary mr-5" type="submit">Guardar</button>
         <button class="btn btn-primary ml-3 btn-secondary" type="button">Volver</button>
     </form>

@@ -14,7 +14,8 @@
                     <option value="tag">Etiqueta</option>
                 </select>
             </div>
-            <div class="col col-md-5"><input class="form-control" value="{{old('name')}}" name='name' type="text"></div>
+            <div class="col col-md-5"><input class="form-control" value="{{ old('name') }}"
+                    name='name' type="text"></div>
             <div class="col col-md-2"><button class="btn btn-primary" type="submit">Filtrar</button></div>
         </div>
     </form>
@@ -25,7 +26,8 @@
                     <th>Titulo</th>
                     <th>Categoria</th>
                     <th>Etiquetas</th>
-                    <th>Featured</th>
+                    <th>Destacado</th>
+                    <th>Estado</th>
                     <th>Editar</th>
                     <th>Borrar</th>
                 </tr>
@@ -33,7 +35,9 @@
             <tbody>
                 @foreach($posts as $post)
                     <tr>
-                        <td><a href="{{ config('settings.host-front').':'.config('settings.port-front').'/posts/'.$post->id }}">  {{ Str::limit( $post->title,50) }} </a> </td>
+                        <td><a
+                                href="{{ config('settings.host-front').':'.config('settings.port-front').'/posts/'.$post->id }}">
+                                {{ Str::limit( $post->title,50) }} </a> </td>
                         <td> {{ $post->category->name }}</td>
                         <td>
                             @foreach($post->tags as $tag)
@@ -43,7 +47,23 @@
                         <td>
                             @if($post->featured==true) si @else no @endif
                         </td>
-
+                        <td>
+                            <form action="{{ route('post.changeStatus', $post->id) }}"
+                                method="post">
+                                @csrf
+                                @if(Str::of($post->status)->exactly('publiced'))
+                                    <div>Publicado</div>
+                                    <input type="hidden" name="status" value="draff">
+                                    <button type="submit"
+                                        class="btn btn-sm btn-info">cambiar a borrador</button>
+                                @else
+                                    <div>Borrador</div>
+                                    <input type="hidden" name="status" value="publiced">
+                                    <button type="submit"  class="btn btn-sm btn-info">
+                                        publicar</button>
+                                @endif
+                            </form>
+                        </td>
                         <td>
                             <a href="{{ route('post.edit', $post->id) }}"
                                 class="btn btn-sml btn-secondary"> Editar</a>

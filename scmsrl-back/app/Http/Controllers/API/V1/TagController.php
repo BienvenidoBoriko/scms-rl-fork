@@ -21,8 +21,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::with('posts')->orderBy('created_at', 'desc')->paginate(7);
-        ;
+        $tags = Tag::with(['posts'=> function ($q) {
+            $q->where('status', 'publiced');
+        }])->orderBy('created_at', 'desc')->paginate(7);
+
         return response([ 'tags' => ApiResource::collection($tags), 'message' => 'Retrieved successfully'], 200);
     }
 
@@ -63,7 +65,9 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        $tag=Tag::with('posts')->where('id', $tag->id)->get();
+        $tag=Tag::with(['posts'=> function ($q) {
+            $q->where('status', 'publiced');
+        }])->where('id', $tag->id)->get();
         return response([ 'tag' => new ApiResource($tag), 'message' => 'Retrieved successfully'], 200);
     }
 

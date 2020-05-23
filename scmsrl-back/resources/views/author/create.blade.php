@@ -70,10 +70,12 @@
         </div>
         <div class="form-group">
             <div class="form-row">
-                <div class="col"><label class="custom-file-label" for="profile_img">Imagen de usuario</label><input class="custom-file-input @error('profile_img') is-invalid @enderror" id="profile_img" name="profile_img" type="file">
+                <div class="col"><input class="custom-file-input @error('profile_img') is-invalid @enderror" id="profile_img" name="profile_img" type="file">
+                    <label class="custom-file-label" for="profile_img">Imagen de usuario</label>
                 <x-error-message name="profile_img"/>
                 </div>
-                <div class="col"><label class="custom-file-label" for="cover_img">Imagen de cabecera</label><input class="custom-file-input @error('cover_img') is-invalid @enderror" id="cover_img" name="cover_img" type="file">
+                <div class="col"><input class="custom-file-input @error('cover_img') is-invalid @enderror" id="cover_img" name="cover_img" type="file">
+                    <label class="custom-file-label" for="cover_img">Imagen de cabecera</label>
                 <x-error-message name="cover_img"/>
                 </div>
             </div>

@@ -25,7 +25,7 @@ class PostSeeder extends Seeder
             <p>Seg&uacute;n ese esquema, en Microsoft volver&iacute;an a una apuesta similar a la que existe hoy en d&iacute;a con la Xbox One X y la Xbox One S:&nbsp;<strong>un modelo m&aacute;s potente y ambicioso, y otro m&aacute;s modesto y asequible</strong>&nbsp;para poder atacar a dos espectros de mercado diferentes.</p>
 
             <p><img alt="" src="http://192.168.10.10/storage/uploads/15878977141366_2000 (1).jpg" style="height:288px; width:466px" /></p>',
-            'featured_img'=>'storage/uploads/15878990691366_2000 (1).jpg ',
+            'featured_img'=>'storage/uploads/15898985861366_2001.jpg',
             'featured'=>1,
             'custom_except'=>'Nuevos datos plantean el anuncio en mayo de la Xbox Series S,una versión más asequible de las Xbox Series X ',
             'slug'=>'Xbox Series S',
